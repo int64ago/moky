@@ -1,0 +1,25 @@
+{
+  "name": "mock-proxy",
+  "version": "0.0.1",
+  "description": "A proxy server with mock",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/int64ago/mock-proxy.git"
+  },
+  "keywords": [
+    "mock",
+    "proxy"
+  ],
+  "author": "Cody Chan <int64ago@gmail.com> (https://int64ago.org)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/int64ago/mock-proxy/issues"
+  },
+  "homepage": "https://github.com/int64ago/mock-proxy#readme"
+}

@@ -1,5 +1,5 @@
 {
-  "name": "mock-proxy",
+  "name": "moky",
   "version": "0.0.1",
   "description": "A proxy server with mock",
   "main": "index.js",

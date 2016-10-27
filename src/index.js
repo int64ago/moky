@@ -5,58 +5,77 @@ import httpProxy from 'http-proxy';
 import server from 'koa-static';
 import favicon from 'koa-favicon';
 import mount from 'koa-mount';
-import options from '../moky.config';
 import mock from './lib/mock';
+import log from 'fancy-log';
 import { mapUrlToPage } from './lib/utils';
 
-const app = new Koa();
+export default function(options) {
+  const app = new Koa();
 
-// Proxy settings
-const proxy = httpProxy.createProxyServer({
-  target: options.proxyMaps[options.env],
-  changeOrigin: true,
-});
+  // Proxy settings
+  let proxy = null;
+  if (options.envMaps[options.env]) {
+    proxy = httpProxy.createProxyServer({
+      target: options.envMaps[options.env],
+      changeOrigin: true,
+    });
+    log(`Seting proxy target to ${options.envMaps[options.env]}`);
+  }
 
-// View settings
-app.use(views(options.viewsPath, options.viewConfig));
+  // View settings
+  app.use(views(options.viewsPath, options.viewConfig));
 
-// Handle proxy error
-proxy.on('error', function(err, req, res) {
-  res.writeHead(500, {
-    'Content-Type': 'text/plain'
+  // Handle proxy error
+  proxy && proxy.on('error', function(err, req, res) {
+    res.writeHead(500, {
+      'Content-Type': 'text/plain'
+    });
+    res.end('Proxy Error!');
   });
-  res.end('Proxy Error!');
-});
 
-// Handle koa error
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch(err) {
-    ctx.throw(500, err);
+  // Handle koa error
+  app.use(async (ctx, next) => {
+    try {
+      await next();
+    } catch(err) {
+      ctx.throw(500, err);
+    }
+  });
+
+  // Server favicon
+  if (options.faviconPath) {
+    app.use(favicon(options.faviconPath));
+    log(`Server favicon: ${options.faviconPath}`);
   }
-});
+  // Server static
+  for (let [k, v] of Object.entries(options.publicPaths || {})) {
+    app.use(mount(k, server(v)));
+    log(`Mount path <${k}> with <${v}>`);
+  }
 
-// Server favicon
-app.use(favicon(options.faviconPath));
-// Server static
-for (let [k, v] of Object.entries(options.publicPaths || {})) {
-  app.use(mount(k, server(v)));
+  // Use mock server
+  app.use(mock(options.env || 'mock'));
+
+  // Views map & render
+  app.use(async (ctx, next) => {
+    const page = mapUrlToPage(ctx.url, options.urlMaps);
+    if (page) {
+      log(`Render page: ${page}`);
+      await ctx.render(page, { test: 'test' });
+    } else {
+      await next();
+    }
+  });
+
+  // Others, pass to proxy or asyncMock
+  // Ref: https://github.com/koajs/koa/issues/198
+  app.use(async ctx => {
+    ctx.response = false;
+    log(`Proxy: ${ctx.url}`);
+    proxy && proxy.web(ctx.req, ctx.res)
+  });
+
+  // Listen
+  app.listen(options.localPort || 3000);
+  log(`Listen on port: ${options.localPort || 3000}`);
 }
-
-// Use mock server
-app.use(mock(options.env || 'mock'));
-
-// Views map & render
-app.use(async ctx => {
-  const page = mapUrlToPage(ctx.url, options.urlMaps);
-  await ctx.render(page, { test: 'test' });
-});
-
-http.createServer((req, res) => {
-  const page = mapUrlToPage(req.url, options.urlMaps);
-  if (options.env !== 'mock' && false) {
-    return proxy.web(req, res);
-  }
-  app.callback()(req, res);
-}).listen(options.localPort || 3000);

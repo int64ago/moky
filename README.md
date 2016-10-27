@@ -69,7 +69,7 @@ Usage: moky [options]
 
 Options:
   -c, --config  Configure file path                  [default: "moky.config.js"]
-  -e, --env     Debug env, see <envMaps> in configure file     [default: "mock"]
+  -e, --env     Debug env, see <proxyMaps> in configure file     [default: "mock"]
   -h, --help    Show help                                              [boolean]
 ```
 

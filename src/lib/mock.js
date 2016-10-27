@@ -1,8 +1,8 @@
-export default function(env) {
+export default function (env) {
   return async (ctx, next) => {
     if (env !== 'mock') {
-      return await next();
+      return await next()
     }
-    ctx.body = 'Mock';
+    ctx.body = 'Mock'
   }
 }

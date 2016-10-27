@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/int64ago/mock-proxy.git"
+    "url": "git+https://github.com/int64ago/moky.git"
   },
   "keywords": [
     "mock",
@@ -48,7 +48,7 @@
   "author": "Cody Chan <int64ago@gmail.com> (https://int64ago.org)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/int64ago/mock-proxy/issues"
+    "url": "https://github.com/int64ago/moky/issues"
   },
-  "homepage": "https://github.com/int64ago/mock-proxy#readme"
+  "homepage": "https://github.com/int64ago/moky#readme"
 }

@@ -2,10 +2,16 @@
   "name": "moky",
   "version": "0.0.1",
   "description": "A proxy server with mock",
-  "main": "index.js",
+  "main": "src/index.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "http-proxy": "^1.15.2",
     "koa": "^2.0.0",
+    "koa-favicon": "^2.0.0",
+    "koa-mount": "^2.0.0",
+    "koa-static": "^3.0.0",
     "koa-views-2": "^5.1.4",
     "nunjucks": "^2.5.2",
     "path-to-regexp": "^1.6.0"
@@ -19,9 +25,13 @@
     "babel-preset-stage-2": "^6.17.0"
   },
   "scripts": {
-    "start": "babel-node index.js",
-    "build": "babel ",
+    "start": "babel-node src/index.js",
+    "build": "babel src -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "moky": "dist/index.js"
   },
   "repository": {
     "type": "git",

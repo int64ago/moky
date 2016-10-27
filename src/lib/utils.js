@@ -1,9 +1,6 @@
 import pathToRegexp from 'path-to-regexp';
-import options from '../options';
 
-const urlMaps = options.urlMaps;
-
-export function mapUrl(url) {
+export function mapUrlToPage(url, urlMaps) {
   for(let k in urlMaps) {
     if (pathToRegexp(k).test(url)) {
       return urlMaps[k];

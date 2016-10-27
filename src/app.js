@@ -4,21 +4,20 @@ import httpProxy from 'http-proxy'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'
-import mock from './lib/mock'
 import log from 'fancy-log'
-import { mapUrlToPage, getTplMock } from './lib/utils'
+import { mapUrlToPage, getViewsMock, getAsyncMock } from './utils'
 
 export default function (options) {
   const app = new Koa()
 
   // Proxy settings
   let proxy = null
-  if (options.envMaps[options.env]) {
+  if (options.proxyMaps[options.env]) {
     proxy = httpProxy.createProxyServer({
-      target: options.envMaps[options.env],
+      target: options.proxyMaps[options.env],
       changeOrigin: true
     })
-    log(`Seting proxy target to ${options.envMaps[options.env]}`)
+    log(`Seting proxy target to ${options.proxyMaps[options.env]}`)
   }
 
   // View settings
@@ -53,14 +52,11 @@ export default function (options) {
     log(`Mount path <${k}> with <${v}>`)
   }
 
-  // Use mock server
-  app.use(mock(options.env || 'mock'))
-
   // Views map & render
   app.use(async (ctx, next) => {
     const page = mapUrlToPage(ctx.url, options.urlMaps)
     if (page) {
-      const data = getTplMock(page, options.viewsMockPath)
+      const data = getViewsMock(page, options.viewsMockPath)
       log(`Render page: ${page}`)
       log(`Render data: ${JSON.stringify(data)}`)
       await ctx.render(page, data)
@@ -73,8 +69,18 @@ export default function (options) {
   // Ref: https://github.com/koajs/koa/issues/198
   app.use(async ctx => {
     ctx.response = false
-    log(`Proxy: ${ctx.url}`)
-    proxy && proxy.web(ctx.req, ctx.res)
+    if (proxy) {
+      log(`Proxy: ${ctx.url}`)
+      proxy.web(ctx.req, ctx.res)
+    } else {
+      const data = getAsyncMock(ctx.method, ctx.path, options.asyncMockPath)
+      log(`Mock: ${ctx.url}`)
+      log(`Data: ${JSON.stringify(data)}`)
+      ctx.res.writeHead(200, {
+        'Content-Type': 'application/json'
+      })
+      ctx.res.end(JSON.stringify(data || {}))
+    }
   })
 
   // Listen

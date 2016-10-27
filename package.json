@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A proxy server with mock",
   "main": "src/cli.js",
   "files": [
@@ -29,8 +29,8 @@
   },
   "scripts": {
     "build": "babel src -d dist",
-    "lint": "standard src/**/*.js src/*.js",
-    "lint:fix": "standard src/**/*.js src/*.js --fix",
+    "lint": "standard src/*.js",
+    "lint:fix": "standard src/*.js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "preferGlobal": true,

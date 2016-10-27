@@ -2,8 +2,8 @@
 
 import yargs from 'yargs'
 import path from 'path'
-import { parseConfig } from './lib/utils'
-import app from './index'
+import { parseConfig } from './utils'
+import app from './app'
 
 const argv = yargs
   .usage('Usage: moky [options]')

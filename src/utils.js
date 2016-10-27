@@ -3,6 +3,19 @@ import log from 'fancy-log'
 import path from 'path'
 import fs from 'fs'
 
+const readObjFromFile = file => {
+  if (!fs.existsSync(file)) {
+    log.error(`${file} doesn't exists`)
+    return {}
+  }
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8'))
+  } catch (err) {
+    log.error(err)
+    return {}
+  }
+}
+
 export function mapUrlToPage (url, urlMaps) {
   for (let k in urlMaps) {
     if (pathToRegexp(k).test(url)) {
@@ -22,20 +35,24 @@ export function parseConfig (absPath) {
   return config
 }
 
-export function getTplMock (page, mockPath) {
+export function getViewsMock (page, mockPath) {
   if (!mockPath) {
     log.error(`Page: ${page}, mockPath: ${mockPath}, not exists`)
     return {}
   }
-  const mockFile = path.resolve(mockPath, page) + '.json';
-  if (!fs.existsSync(mockFile)) {
-    log.error(`${mockFile} doesn't exists`)
+  const mockFile = path.resolve(mockPath, page) + '.json'
+  return readObjFromFile(mockFile)
+}
+
+export function getAsyncMock (method, urlPath, mockPath) {
+  if (!mockPath) {
+    log.error(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`)
     return {}
   }
-  try {
-    return JSON.parse(fs.readFileSync(mockFile, 'utf8'))
-  } catch (err) {
-    log.error(err)
-    return {}
-  }
+  const mockFile = path.resolve(
+    mockPath,
+    method.toLowerCase(),
+    // Remove first /
+    urlPath.substr(1)) + '.json'
+  return readObjFromFile(mockFile)
 }

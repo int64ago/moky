@@ -6,7 +6,7 @@ import favicon from 'koa-favicon'
 import mount from 'koa-mount'
 import mock from './lib/mock'
 import log from 'fancy-log'
-import { mapUrlToPage } from './lib/utils'
+import { mapUrlToPage, getTplMock } from './lib/utils'
 
 export default function (options) {
   const app = new Koa()
@@ -60,8 +60,10 @@ export default function (options) {
   app.use(async (ctx, next) => {
     const page = mapUrlToPage(ctx.url, options.urlMaps)
     if (page) {
+      const data = getTplMock(page, options.viewsMockPath)
       log(`Render page: ${page}`)
-      await ctx.render(page, { test: 'test' })
+      log(`Render data: ${JSON.stringify(data)}`)
+      await ctx.render(page, data)
     } else {
       await next()
     }

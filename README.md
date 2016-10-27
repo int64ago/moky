@@ -18,6 +18,15 @@ Here comes the quick start:
 
 ...Yeah, it'll not work actually :-) You need edit `moky.config.js` at first.
 
+## Quick start
+
+If you really want to have a try, clone the project to disk
+
+ - `cd moky/example`
+ - Run `moky`
+ - Open `http://localhost:3000` & `http://localhost:3000/page` (default to mock mode)
+ - Exit and **re**run `moky -e dev`, refresh two pages (async request is pass to proxy)
+
 ## Configure
 
 The following is just a example, edit as your ways.
@@ -31,32 +40,32 @@ module.exports = {
   /* Listen port for moky server, OPTIONAL */
   localPort: 3000,
   /* Asnyc api mock data, OPTIONAL */
-  asyncMockPath: path.join(__dirname, '__test__', 'mock'),
+  asyncMockPath: path.join(__dirname, 'mock'),
   /* Template mock data, OPTIONAL */
-  viewsMockPath: path.join(__dirname, '__test__', 'tplMock'),
+  viewsMockPath: path.join(__dirname, 'tplMock'),
   /* Root directory for template rendering, REQUIRED */
-  viewsPath: path.join(__dirname, '__test__', 'views'),
+  viewsPath: path.join(__dirname, 'views'),
   /* Path of favicon.ico, OPTIONAL */
-  faviconPath: path.join(__dirname, '__test__', 'public', 'favicon.ico'),
+  faviconPath: path.join(__dirname, 'public', 'favicon.ico'),
   /* Static router, OPTIONAL but usually required */
   publicPaths: {
-    '/css': path.join(__dirname, '__test__', 'public', 'css'),
-    '/js': path.join(__dirname, '__test__', 'public', 'js'),
+    '/css': path.join(__dirname, 'public', 'css'),
+    '/js': path.join(__dirname, 'public', 'js'),
   },
   /* Template engine settings, the same as koa-views, REQUIRED */
   viewConfig: {
-    extension: 'ftl',
-    map: { ftl: 'freemarker' },
+    extension: 'html',
+    map: { html: 'nunjucks' },
   },
   /* Settings for proxy, OPTIONAL */
   proxyMaps: {
-    dev: 'http://example.com',
-    local: 'http://localhost:3000',
+    dev: 'https://hacker-news.firebaseio.com',
+    local: 'http://localhost:8080',
   },
   /* Settings for template page routing, REQUIRED */
   urlMaps: {
-    '/test1': 'index',
-    '/test2': 'page/index',
+    '/': 'index',
+    '/page': 'page/index',
   }
 }
 ```

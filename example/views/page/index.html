@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>bar</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    bar {{ test }}
+    <div id="app">
+      
+    </div>
+  </body>
+  <script>
+    fetch('/v0/item/2921983.json').then(res => {
+      return res.json();
+    }).then(json => {
+      document.querySelector('#app').innerText = JSON.stringify(json);
+    })
+  </script>
+</html>

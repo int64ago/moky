@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="#">
+    <img alt="MOKY" src="https://dn-getlink.qbox.me/0oxtp9ie44vq7m7b7kqpvi.png"/>
+  </a>
+</p>
+
 # moky = mock + proxy
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)

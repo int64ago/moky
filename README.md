@@ -80,12 +80,10 @@ module.exports = {
 
 The `moky` has integrated some major template engines, if your template is one of the following type, your don't need to do anything, it works well.
 
-  - freemarker
-  - nunjucks
-  - swig
-  - ejs
-  - jade
+  - freemarker (`JAVA_HOME` should set correctly)
   - handlebars
+  - nunjucks
+  - ejs
 
 **BUT**, for we use [koa-views](https://github.com/queckezz/koa-views) and koa-views use [consolidate.js](https://github.com/tj/consolidate.js), it's quite easy to enable a template engine, if you use a template engine we don't include, issues welcome :-)
 

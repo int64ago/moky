@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "A proxy server with mock",
   "main": "src/cli.js",
   "files": [
@@ -8,8 +8,11 @@
   ],
   "dependencies": {
     "babel-runtime": "^6.18.0",
+    "ejs": "^2.5.2",
     "fancy-log": "^1.2.0",
+    "handlebars": "^4.0.5",
     "http-proxy": "^1.15.2",
+    "jade": "^1.11.0",
     "koa": "^2.0.0",
     "koa-favicon": "^2.0.0",
     "koa-mount": "^2.0.0",
@@ -17,6 +20,7 @@
     "koa-views-2": "^5.1.4",
     "nunjucks": "^2.5.2",
     "path-to-regexp": "^1.6.0",
+    "swig": "^1.4.2",
     "yargs": "^6.3.0"
   },
   "devDependencies": {

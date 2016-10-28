@@ -1,6 +1,5 @@
 import Koa from 'koa'
 import views from 'koa-views-2'
-import httpProxy from 'http-proxy'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'

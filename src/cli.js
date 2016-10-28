@@ -2,7 +2,7 @@
 
 import yargs from 'yargs'
 import path from 'path'
-import { parseConfig } from './utils'
+import { parseConfig } from './lib/utils'
 import app from './app'
 
 const argv = yargs

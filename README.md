@@ -63,6 +63,8 @@ module.exports = {
     extension: 'html',
     map: { html: 'nunjucks' },
   },
+  /* Host name of proxy, works for `virtual hosts`, OPTIONAL */
+  hostName: 'hacker-news.firebaseio.com',
   /* Settings for proxy, OPTIONAL */
   proxyMaps: {
     dev: 'https://hacker-news.firebaseio.com',

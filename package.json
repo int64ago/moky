@@ -31,8 +31,8 @@
   },
   "scripts": {
     "build": "babel src -d dist",
-    "lint": "standard src/*.js",
-    "lint:fix": "standard src/*.js --fix",
+    "lint": "standard src/*.js src/**/*.js",
+    "lint:fix": "standard src/*.js src/**/*.js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "preferGlobal": true,

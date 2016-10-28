@@ -32,5 +32,5 @@ module.exports = {
   urlMaps: {
     '/': 'index',
     '/page': 'page/index',
-  }
+  },
 }

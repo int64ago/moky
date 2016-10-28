@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A proxy server with mock",
   "main": "src/cli.js",
   "files": [

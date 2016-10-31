@@ -2,8 +2,7 @@
 
 import yargs from 'yargs'
 import path from 'path'
-import { parseConfig } from './lib/utils'
-import app from './app'
+import { moky, parseConfig } from './app'
 
 const argv = yargs
   .usage('Usage: moky [options]')
@@ -20,4 +19,4 @@ const argv = yargs
 const options = parseConfig(path.resolve(argv.config))
 options.env = argv.env
 
-app(options)
+moky(options)

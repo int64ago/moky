@@ -6,7 +6,7 @@ import mount from 'koa-mount'
 import log from 'fancy-log'
 import { error, render, async } from './middleware'
 
-export { parseConfig as parseConfig } from './lib/utils'
+export { parseConfig } from './lib/utils'
 
 export function moky (options) {
   const app = new Koa()

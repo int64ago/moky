@@ -120,6 +120,10 @@ It's easy to integrate moky in your own cli app.
  moky(options)
  ```
 
+## Tips
+
+ - Be tired with filling common views mock ? Try putting a `__COMMON__.json` in `viewsMockPath` !
+
 ## License
 [![license][license-image]][license-url]
 

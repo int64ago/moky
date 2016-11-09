@@ -36,12 +36,13 @@ export function parseConfig (absPath) {
 }
 
 export function getViewsMock (page, mockPath) {
+  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__.json'))
   if (!mockPath) {
     log.error(`Page: ${page}, mockPath: ${mockPath}, not exists`)
-    return {}
+    return Object.assign(commonMock)
   }
   const mockFile = path.resolve(mockPath, page) + '.json'
-  return readObjFromFile(mockFile)
+  return Object.assign(commonMock, readObjFromFile(mockFile))
 }
 
 export function getAsyncMock (method, urlPath, mockPath) {

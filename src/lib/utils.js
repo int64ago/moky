@@ -1,17 +1,18 @@
 import pathToRegexp from 'path-to-regexp'
 import log from 'fancy-log'
+import chalk from 'chalk'
 import path from 'path'
 import fs from 'fs'
 
 const readObjFromFile = file => {
   if (!fs.existsSync(file)) {
-    log.error(`${file} doesn't exists`)
+    log.error(chalk.bgRed(`${file} doesn't exists`))
     return {}
   }
   try {
     return JSON.parse(fs.readFileSync(file, 'utf8'))
   } catch (err) {
-    log.error(err)
+    log.error(chalk.bgRed(err))
     return {}
   }
 }
@@ -26,13 +27,18 @@ export function mapUrlToPage (url, urlMaps) {
 }
 
 export function parseConfig (absPath) {
-  if (!fs.existsSync(absPath)) throw new Error(`File not found: ${absPath}`)
+  if (!fs.existsSync(absPath)) {
+    log.error(chalk.bgRed(`File not found: ${absPath}`))
+    return {}
+  }
 
   let config = require(absPath)
-  if (!config) throw new Error('Oops, something wrong in config file.')
   // Required properties check
   for (let c of ['viewsPath', 'viewConfig', 'urlMaps']) {
-    if (!config[c]) throw new Error(`<${c}> is required`)
+    if (!config[c]) {
+      log.error(chalk.bgRed(`<${c}> is required`))
+      return {}
+    }
   }
   return config
 }
@@ -40,7 +46,7 @@ export function parseConfig (absPath) {
 export function getViewsMock (page, mockPath) {
   const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__.json'))
   if (!mockPath) {
-    log.error(`Page: ${page}, mockPath: ${mockPath}, not exists`)
+    log.error(chalk.bgRed(`Page: ${page}, mockPath: ${mockPath}, not exists`))
     return Object.assign(commonMock)
   }
   const mockFile = path.resolve(mockPath, page) + '.json'
@@ -49,7 +55,7 @@ export function getViewsMock (page, mockPath) {
 
 export function getAsyncMock (method, urlPath, mockPath) {
   if (!mockPath) {
-    log.error(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`)
+    log.error(chalk.bgRed(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`))
     return {}
   }
   const mockFile = path.resolve(

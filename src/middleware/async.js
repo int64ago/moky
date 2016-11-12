@@ -1,4 +1,5 @@
 import log from 'fancy-log'
+import chalk from 'chalk'
 import Proxy from '../lib/proxy'
 import { getAsyncMock } from '../lib/utils'
 
@@ -8,12 +9,12 @@ export default function (options) {
     // Ref: https://github.com/koajs/koa/issues/198
     ctx.response = false
     if (proxy) {
-      log(`Proxy: ${ctx.url}`)
+      log(chalk.yellow(`Proxy: ${ctx.url}`))
       proxy.web(ctx.req, ctx.res)
     } else {
       const data = getAsyncMock(ctx.method, ctx.path, options.asyncMockPath)
-      log(`Mock: ${ctx.url}`)
-      log(`Data: ${JSON.stringify(data)}`)
+      log(chalk.yellow(`Mock: ${ctx.url}`))
+      log(chalk.yellow(`Data: ${JSON.stringify(data)}`))
       ctx.res.writeHead(200, {
         'Content-Type': 'application/json'
       })

@@ -26,6 +26,8 @@ export function mapUrlToPage (url, urlMaps) {
 }
 
 export function parseConfig (absPath) {
+  if (!fs.existsSync(absPath)) throw new Error(`File not found: ${absPath}`)
+
   let config = require(absPath)
   if (!config) throw new Error('Oops, something wrong in config file.')
   // Required properties check

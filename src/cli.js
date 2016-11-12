@@ -14,6 +14,9 @@ const argv = yargs
   .default('e', 'mock')
   .help('h')
   .alias('h', 'help')
+  .alias('v', 'version')
+  .describe('v', 'Show version')
+  .version(() => require('../package').version)
   .argv
 
 const options = parseConfig(path.resolve(argv.config))

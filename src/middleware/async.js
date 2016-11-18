@@ -14,7 +14,7 @@ export default function (options) {
     } else {
       const data = getAsyncMock(ctx.method, ctx.path, options.asyncMockPath)
       log(chalk.yellow(`Mock: ${ctx.url}`))
-      log(chalk.yellow(`Data: ${JSON.stringify(data)}`))
+      options.verbose && log(chalk.yellow(`Data: ${JSON.stringify(data)}`))
       ctx.res.writeHead(200, {
         'Content-Type': 'application/json'
       })

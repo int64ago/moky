@@ -8,7 +8,7 @@ export default function (options) {
     if (page) {
       const data = getViewsMock(page, options.viewsMockPath)
       log(chalk.blue(`Render page: ${page}`))
-      log(chalk.blue(`Render data: ${JSON.stringify(data)}`))
+      options.verbose && log(chalk.blue(`Render data: ${JSON.stringify(data)}`))
       await ctx.render(page, data)
     } else {
       await next()

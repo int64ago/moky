@@ -39,5 +39,5 @@ export function moky (options = {}) {
 
   // Listen
   app.listen(options.localPort || 3000)
-  log(chalk.bgGreen(`Listen on port: ${options.localPort || 3000}`))
+  log(chalk.green(`Listen on port: ${options.localPort || 3000}`))
 }

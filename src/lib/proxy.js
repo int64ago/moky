@@ -20,7 +20,7 @@ export default function (options) {
       'Content-Type': 'text/plain'
     })
     res.end('Proxy Error!')
-    log.error(chalk.bgRed(err))
+    log.error(chalk.red(err))
   })
   // Set host Header if needed
   if (options.hostName) {

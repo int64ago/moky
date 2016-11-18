@@ -14,6 +14,8 @@ const argv = yargs
   .default('e', 'mock')
   .help('h')
   .alias('h', 'help')
+  .alias('V', 'verbose')
+  .describe('V', 'Show detail log')
   .alias('v', 'version')
   .describe('v', 'Show version')
   .version(() => require('../package').version)
@@ -21,5 +23,8 @@ const argv = yargs
 
 const options = parseConfig(path.resolve(argv.config))
 options.env = argv.env
+if (argv.verbose) {
+  options.verbose = argv.verbose
+}
 
 moky(options)

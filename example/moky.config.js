@@ -4,7 +4,7 @@ module.exports = {
   /* Listen port for moky server, OPTIONAL */
   localPort: 3000,
   /* Show detail log, OPTIONAL(default false) */
-  verbose: true,
+  verbose: false,
   /* Asnyc api mock data, OPTIONAL */
   asyncMockPath: path.join(__dirname, 'mock'),
   /* Template mock data, OPTIONAL */

@@ -43,7 +43,7 @@ export function parseConfig (absPath) {
   return config
 }
 
-export function getViewsMock (page, mockPath) {
+export function getViewsMock (page, mockPath = '') {
   const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__.json'))
   if (!mockPath) {
     log.error(chalk.red(`Page: ${page}, mockPath: ${mockPath}, not exists`))

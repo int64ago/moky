@@ -124,7 +124,8 @@ It's easy to integrate moky in your own cli app.
 
 ## Tips
 
- - Be tired with filling common views mock ? Try putting a `__COMMON__.json` in `viewsMockPath` !
+ - Be tired with filling common views mock ? Try putting a `__COMMON__.js{on}` in `viewsMockPath` !
+ - Mock files with js(Should be exported as CommonJS module) & json extension are friendly supported.
 
 ## License
 [![license][license-image]][license-url]

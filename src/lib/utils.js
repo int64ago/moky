@@ -5,12 +5,12 @@ import path from 'path'
 import fs from 'fs'
 
 const readObjFromFile = file => {
-  if (!fs.existsSync(file)) {
-    log.error(chalk.red(`${file} doesn't exists`))
+  if (!fs.existsSync(file + '.json') && !fs.existsSync(file + '.js')) {
+    log.error(chalk.red(`${file}.js{on} doesn't exists`))
     return {}
   }
   try {
-    return JSON.parse(fs.readFileSync(file, 'utf8'))
+    return require(file)
   } catch (err) {
     log.error(chalk.red(err))
     return {}
@@ -44,12 +44,12 @@ export function parseConfig (absPath) {
 }
 
 export function getViewsMock (page, mockPath = '') {
-  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__.json'))
+  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__'))
   if (!mockPath) {
     log.error(chalk.red(`Page: ${page}, mockPath: ${mockPath}, not exists`))
     return Object.assign(commonMock)
   }
-  const mockFile = path.resolve(mockPath, page) + '.json'
+  const mockFile = path.join(mockPath, page)
   return Object.assign(commonMock, readObjFromFile(mockFile))
 }
 
@@ -58,10 +58,6 @@ export function getAsyncMock (method, urlPath, mockPath) {
     log.error(chalk.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`))
     return {}
   }
-  const mockFile = path.resolve(
-    mockPath,
-    method.toLowerCase(),
-    // Remove first /
-    urlPath.substr(1)) + '.json'
+  const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)
   return readObjFromFile(mockFile)
 }

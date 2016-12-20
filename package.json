@@ -12,6 +12,7 @@
     "decache": "^4.1.0",
     "ejs": "^2.5.2",
     "fancy-log": "^1.2.0",
+    "fs-extra": "^1.0.0",
     "handlebars": "^4.0.5",
     "http-proxy": "^1.15.2",
     "koa": "^2.0.0",

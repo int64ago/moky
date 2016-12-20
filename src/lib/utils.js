@@ -4,10 +4,17 @@ import log from 'fancy-log'
 import chalk from 'chalk'
 import path from 'path'
 import fs from 'fs'
+import { createFileSync, writeJSONSync } from 'fs-extra'
 
 const readObjFromFile = file => {
-  if (!fs.existsSync(file + '.json') && !fs.existsSync(file + '.js')) {
+  const jsonName = file + '.json'
+  const jsName = file + '.js'
+  if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
     log.error(chalk.red(`${file}.js{on} doesn't exists`))
+    // Auto create mock file
+    createFileSync(jsonName)
+    writeJSONSync(jsonName, {})
+    log(chalk.magenta(`Create file: ${jsonName}`))
     return {}
   }
   try {

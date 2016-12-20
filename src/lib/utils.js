@@ -1,4 +1,5 @@
 import pathToRegexp from 'path-to-regexp'
+import decache from 'decache'
 import log from 'fancy-log'
 import chalk from 'chalk'
 import path from 'path'
@@ -10,6 +11,7 @@ const readObjFromFile = file => {
     return {}
   }
   try {
+    decache(file)
     return require(file)
   } catch (err) {
     log.error(chalk.red(err))

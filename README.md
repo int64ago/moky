@@ -72,6 +72,8 @@ module.exports = {
     dev: 'https://hacker-news.firebaseio.com',
     local: 'http://localhost:8080',
   },
+  /* No show logs if url is in the list, OPTIONAL */
+  filteredUrls: [],
   /* Settings for template page routing, REQUIRED */
   urlMaps: {
     '/': 'index',

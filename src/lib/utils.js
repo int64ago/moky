@@ -55,11 +55,8 @@ export function parseConfig (absPath) {
 }
 
 export function getViewsMock (page, mockPath, autoGenMock = false) {
-  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__'))
-  if (!mockPath) {
-    log.error(chalk.red(`Page: ${page}, mockPath: ${mockPath}, not exists`))
-    return Object.assign(commonMock)
-  }
+  if (!mockPath) return {}
+  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__'), autoGenMock)
   const mockFile = path.join(mockPath, page)
   return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
 }

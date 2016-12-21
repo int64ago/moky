@@ -4,7 +4,7 @@ import { mapUrlToPage, getViewsMock } from '../lib/utils'
 
 export default function (options) {
   return async (ctx, next) => {
-    const { viewsMockPath = '', autoGenMock = false } = options
+    const { viewsMockPath, autoGenMock } = options
     let page = mapUrlToPage(ctx.path, options.urlMaps)
     if (page) {
       if (page.startsWith('/')) page = page.substr(1)

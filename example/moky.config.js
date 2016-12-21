@@ -5,6 +5,8 @@ module.exports = {
   localPort: 3000,
   /* Show detail log, OPTIONAL(default false) */
   verbose: false,
+  /* Auto create mock file if not exists, OPTIONAL */
+  autoGenMock: false,
   /* Asnyc api mock data, OPTIONAL */
   asyncMockPath: path.join(__dirname, 'mock'),
   /* Template mock data, OPTIONAL */
@@ -30,7 +32,7 @@ module.exports = {
     dev: 'https://hacker-news.firebaseio.com',
     local: 'http://localhost:8080',
   },
-  /* No show logs if url is in the list, OPTIONAL */
+  /* Not show logs if url is in the list, OPTIONAL */
   filteredUrls: [],
   /* Settings for template page routing, REQUIRED */
   urlMaps: {

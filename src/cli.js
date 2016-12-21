@@ -16,6 +16,8 @@ const argv = yargs
   .alias('h', 'help')
   .alias('V', 'verbose')
   .describe('V', 'Show detail log')
+  .alias('n', 'new')
+  .describe('n', 'Auto create mock file if not exists')
   .alias('v', 'version')
   .describe('v', 'Show version')
   .version(() => require('../package').version)
@@ -25,6 +27,9 @@ const options = parseConfig(path.resolve(argv.config))
 options.env = argv.env
 if (argv.verbose) {
   options.verbose = argv.verbose
+}
+if (argv.new) {
+  options.autoGenMock = argv.new
 }
 
 moky(options)

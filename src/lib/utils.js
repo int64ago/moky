@@ -6,15 +6,17 @@ import path from 'path'
 import fs from 'fs'
 import { createFileSync, writeJSONSync } from 'fs-extra'
 
-const readObjFromFile = file => {
+const readObjFromFile = (file, autoGenMock = false) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
     log.error(chalk.red(`${file}.js{on} doesn't exists`))
     // Auto create mock file
-    createFileSync(jsonName)
-    writeJSONSync(jsonName, {})
-    log(chalk.magenta(`Create file: ${jsonName}`))
+    if (autoGenMock) {
+      createFileSync(jsonName)
+      writeJSONSync(jsonName, {})
+      log(chalk.magenta(`Create file: ${jsonName}`))
+    }
     return {}
   }
   try {
@@ -52,21 +54,21 @@ export function parseConfig (absPath) {
   return config
 }
 
-export function getViewsMock (page, mockPath = '') {
+export function getViewsMock (page, mockPath, autoGenMock = false) {
   const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__'))
   if (!mockPath) {
     log.error(chalk.red(`Page: ${page}, mockPath: ${mockPath}, not exists`))
     return Object.assign(commonMock)
   }
   const mockFile = path.join(mockPath, page)
-  return Object.assign(commonMock, readObjFromFile(mockFile))
+  return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
 }
 
-export function getAsyncMock (method, urlPath, mockPath) {
+export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false) {
   if (!mockPath) {
     log.error(chalk.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`))
     return {}
   }
   const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)
-  return readObjFromFile(mockFile)
+  return readObjFromFile(mockFile, autoGenMock)
 }

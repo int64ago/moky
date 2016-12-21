@@ -6,6 +6,7 @@ import { getAsyncMock } from '../lib/utils'
 
 export default function (options) {
   const proxy = Proxy(options)
+  const { asyncMockPath, autoGenMock } = options
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3
     const logF = (msg) => {
@@ -23,7 +24,7 @@ export default function (options) {
       logF(chalk.yellow(`Proxy: ${ctx.path}`))
       proxy.web(ctx.req, ctx.res)
     } else {
-      const data = getAsyncMock(ctx.method, ctx.path, options.asyncMockPath)
+      const data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock)
       logF(chalk.yellow(`Mock: ${ctx.path}`))
       options.verbose && logF(chalk.yellow(`Data: ${JSON.stringify(data)}`))
       ctx.res.writeHead(200, {

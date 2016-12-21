@@ -47,6 +47,8 @@ module.exports = {
   localPort: 3000,
   /* Show detail log, OPTIONAL(default false) */
   verbose: false,
+  /* Auto create mock file if not exists, OPTIONAL */
+  autoGenMock: false,
   /* Asnyc api mock data, OPTIONAL */
   asyncMockPath: path.join(__dirname, 'mock'),
   /* Template mock data, OPTIONAL */
@@ -72,7 +74,7 @@ module.exports = {
     dev: 'https://hacker-news.firebaseio.com',
     local: 'http://localhost:8080',
   },
-  /* No show logs if url is in the list, OPTIONAL */
+  /* Not show logs if url is in the list, OPTIONAL */
   filteredUrls: [],
   /* Settings for template page routing, REQUIRED */
   urlMaps: {
@@ -100,9 +102,12 @@ The `moky` has integrated some major template engines, if your template is one o
 Usage: moky [options]
 
 Options:
-  -c, --config  Configure file path                  [default: "moky.config.js"]
-  -e, --env     Debug env, see <proxyMaps> in configure file     [default: "mock"]
-  -h, --help    Show help                                              [boolean]
+  -c, --config   Configure file path                 [default: "moky.config.js"]
+  -e, --env      Debug env, see <proxyMaps> in configure file  [default: "mock"]
+  -h, --help     Show help                                             [boolean]
+  -V, --verbose  Show detail log
+  -n, --new      Auto create mock file if not exists
+  -v, --version  Show version number                                   [boolean]
 ```
 
 ## Integrate in your app
@@ -123,6 +128,7 @@ It's easy to integrate moky in your own cli app.
 
  moky(options)
  ```
+For more, see `src/cli.js`
 
 ## Tips
 

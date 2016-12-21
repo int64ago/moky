@@ -1,4 +1,5 @@
 import Koa from 'koa'
+import path from 'path'
 import views from 'koa-views-2'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
@@ -21,10 +22,10 @@ export function moky (options = {}) {
   app.use(error)
 
   // Server favicon
-  if (options.faviconPath) {
-    app.use(favicon(options.faviconPath))
-    log(chalk.cyan(`Server favicon: ${options.faviconPath}`))
-  }
+  const fav = options.faviconPath || path.join(__dirname, '../assets/favicon.ico')
+  app.use(favicon(fav))
+  log(chalk.cyan(`Server favicon: ${fav}`))
+
   // Server static
   for (let [k, v] of Object.entries(options.publicPaths || {})) {
     app.use(mount(k, server(v)))

@@ -9,28 +9,29 @@ export default function (options) {
   const { asyncMockPath, autoGenMock } = options
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3
-    const logF = (msg) => {
-      const { filteredUrls = [] } = options
-      for (let k of filteredUrls) {
-        if (pathToRegexp(k).test(ctx.path)) {
-          return () => {}
-        }
+    let isFiltered = false
+    const { filteredUrls = [] } = options
+    for (let k of filteredUrls) {
+      if (pathToRegexp(k).test(ctx.path)) {
+        isFiltered = true
       }
-      log(msg)
     }
     // Ref: https://github.com/koajs/koa/issues/198
     ctx.response = false
     if (proxy) {
-      logF(chalk.yellow(`Proxy: ${ctx.path}`))
+      log(chalk.yellow(`Proxy: ${ctx.path}`))
       proxy.web(ctx.req, ctx.res)
     } else {
-      const data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock)
-      logF(chalk.yellow(`Mock: ${ctx.path}`))
-      options.verbose && logF(chalk.yellow(`Data: ${JSON.stringify(data)}`))
+      let data = {}
+      if (!isFiltered) {
+        data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock)
+      }
+      !isFiltered && log(chalk.yellow(`Mock: ${ctx.path}`))
+      options.verbose && log(chalk.yellow(`Data: ${JSON.stringify(data)}`))
       ctx.res.writeHead(200, {
         'Content-Type': 'application/json'
       })
-      ctx.res.end(JSON.stringify(data || {}))
+      ctx.res.end(JSON.stringify(data))
     }
   }
 }

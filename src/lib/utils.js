@@ -6,7 +6,7 @@ import path from 'path'
 import fs from 'fs'
 import { createFileSync, writeJSONSync } from 'fs-extra'
 
-const readObjFromFile = (file, autoGenMock = false) => {
+const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
@@ -14,17 +14,17 @@ const readObjFromFile = (file, autoGenMock = false) => {
     // Auto create mock file
     if (autoGenMock) {
       createFileSync(jsonName)
-      writeJSONSync(jsonName, {})
+      writeJSONSync(jsonName, defaultMock)
       log(chalk.magenta(`Create file: ${jsonName}`))
     }
-    return {}
+    return defaultMock
   }
   try {
     decache(file)
     return require(file)
   } catch (err) {
     log.error(chalk.red(err))
-    return {}
+    return defaultMock
   }
 }
 
@@ -54,18 +54,22 @@ export function parseConfig (absPath) {
   return config
 }
 
-export function getViewsMock (page, mockPath, autoGenMock = false) {
+export function getViewsMock (page, mockPath, autoGenMock = false, defaultMock = {}) {
   if (!mockPath) return {}
-  const commonMock = readObjFromFile(path.join(mockPath, '__COMMON__'), autoGenMock)
+  const commonMock = readObjFromFile(
+    path.join(mockPath, '__COMMON__'),
+    autoGenMock,
+    defaultMock
+  )
   const mockFile = path.join(mockPath, page)
   return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
 }
 
-export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false) {
+export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false, defaultMock = {}) {
   if (!mockPath) {
     log.error(chalk.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`))
-    return {}
+    return defaultMock
   }
   const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)
-  return readObjFromFile(mockFile, autoGenMock)
+  return readObjFromFile(mockFile, autoGenMock, defaultMock)
 }

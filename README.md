@@ -53,6 +53,8 @@ module.exports = {
   asyncMockPath: path.join(__dirname, 'mock'),
   /* Template mock data, OPTIONAL */
   viewsMockPath: path.join(__dirname, 'tplMock'),
+  /* Default mock data, OPTIONAL */
+  defaultMock: {},
   /* Root directory for template rendering, REQUIRED */
   viewsPath: path.join(__dirname, 'views'),
   /* Path of favicon.ico, OPTIONAL */

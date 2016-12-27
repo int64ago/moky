@@ -6,7 +6,7 @@ import { getAsyncMock } from '../lib/utils'
 
 export default function (options) {
   const proxy = Proxy(options)
-  const { asyncMockPath, autoGenMock } = options
+  const { asyncMockPath, autoGenMock, defaultMock } = options
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3
     let isFiltered = false
@@ -24,7 +24,7 @@ export default function (options) {
     } else {
       let data = {}
       if (!isFiltered) {
-        data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock)
+        data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock, defaultMock)
       }
       !isFiltered && log(chalk.yellow(`Mock: ${ctx.path}`))
       options.verbose && log(chalk.yellow(`Data: ${JSON.stringify(data)}`))

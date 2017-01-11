@@ -8,9 +8,9 @@ module.exports = {
   /* Auto create mock file if not exists, OPTIONAL */
   autoGenMock: false,
   /* Asnyc api mock data, OPTIONAL */
-  asyncMockPath: path.join(__dirname, 'mock'),
+  asyncMockPath: path.join(__dirname, 'moky_mock', 'async_mock'),
   /* Template mock data, OPTIONAL */
-  viewsMockPath: path.join(__dirname, 'tplMock'),
+  viewsMockPath: path.join(__dirname, 'moky_mock', 'views_mock'),
   /* Default mock data, OPTIONAL */
   defaultMock: {},
   /* Root directory for template rendering, REQUIRED */

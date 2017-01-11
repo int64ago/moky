@@ -19,7 +19,7 @@
     "koa-favicon": "^2.0.0",
     "koa-mount": "^2.0.0",
     "koa-static": "^3.0.0",
-    "koa-views-2": "5.1.7",
+    "koa-views-2": "^5.1.9",
     "nunjucks": "^2.5.2",
     "path-to-regexp": "^1.6.0",
     "yargs": "^6.3.0"

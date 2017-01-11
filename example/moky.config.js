@@ -37,8 +37,5 @@ module.exports = {
   /* Not show logs if url is in the list, OPTIONAL */
   filteredUrls: [],
   /* Settings for template page routing, REQUIRED */
-  urlMaps: {
-    '/': 'index',
-    '/page': 'page/index',
-  },
+  urlMaps: require('./moky.urlMaps'),
 }

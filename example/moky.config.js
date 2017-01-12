@@ -31,7 +31,7 @@ module.exports = {
   hostName: 'hacker-news.firebaseio.com',
   /* Settings for proxy, OPTIONAL */
   proxyMaps: {
-    dev: 'https://hacker-news.firebaseio.com',
+    dev: 'https://104.154.130.226:443',
     local: 'http://localhost:8080',
   },
   /* Not show logs if url is in the list, OPTIONAL */

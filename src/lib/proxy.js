@@ -1,18 +1,22 @@
 import httpProxy from 'http-proxy'
 import log from 'fancy-log'
 import chalk from 'chalk'
+import { parse } from 'url'
 
 export default function (options) {
   // Proxy settings
   if (!options.proxyMaps[options.env]) {
     return null
   }
+  const target = options.proxyMaps[options.env]
   const proxy = httpProxy.createProxyServer({
-    target: options.proxyMaps[options.env],
-    changeOrigin: true,
-    secure: false
+    target,
+    secure: false,
+    headers: {
+      host: options.hostName || parse(target)['host'],
+    },
   })
-  log(chalk.cyan(`Seting proxy target to ${options.proxyMaps[options.env]}`))
+  log(chalk.cyan(`Seting proxy target to ${target}`))
 
   // Handle proxy error
   proxy.on('error', function (err, req, res) {
@@ -22,11 +26,5 @@ export default function (options) {
     res.end('Proxy Error!')
     log.error(chalk.red(err))
   })
-  // Set host Header if needed
-  if (options.hostName) {
-    proxy.on('proxyReq', function (proxyReq, req, res) {
-      proxyReq.setHeader('Host', options.hostName)
-    })
-  }
   return proxy
 }

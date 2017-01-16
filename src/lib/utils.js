@@ -1,7 +1,6 @@
 import pathToRegexp from 'path-to-regexp'
 import decache from 'decache'
-import log from 'fancy-log'
-import chalk from 'chalk'
+import log from 'fancy-log-chalk'
 import path from 'path'
 import fs from 'fs'
 import { createFileSync, writeJSONSync } from 'fs-extra'
@@ -10,12 +9,12 @@ const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
-    log.error(chalk.red(`${file}.js{on} doesn't exists`))
+    log.red(`${file}.js{on} doesn't exists`)
     // Auto create mock file
     if (autoGenMock) {
       createFileSync(jsonName)
       writeJSONSync(jsonName, defaultMock)
-      log(chalk.magenta(`Create file: ${jsonName}`))
+      log.magenta(`Create file: ${jsonName}`)
     }
     return defaultMock
   }
@@ -23,7 +22,7 @@ const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
     decache(file)
     return require(file)
   } catch (err) {
-    log.error(chalk.red(err))
+    log.red(err)
     return defaultMock
   }
 }
@@ -39,7 +38,7 @@ export function mapUrlToPage (url, urlMaps) {
 
 export function parseConfig (absPath) {
   if (!fs.existsSync(absPath)) {
-    log.error(chalk.red(`File not found: ${absPath}`))
+    log.red(`File not found: ${absPath}`)
     return {}
   }
 
@@ -47,7 +46,7 @@ export function parseConfig (absPath) {
   // Required properties check
   for (let c of ['viewsPath', 'viewConfig', 'urlMaps']) {
     if (!config[c]) {
-      log.error(chalk.red(`<${c}> is required`))
+      log.red(`<${c}> is required`)
       return {}
     }
   }
@@ -67,7 +66,7 @@ export function getViewsMock (page, mockPath, autoGenMock = false, defaultMock =
 
 export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false, defaultMock = {}) {
   if (!mockPath) {
-    log.error(chalk.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`))
+    log.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`)
     return defaultMock
   }
   const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)

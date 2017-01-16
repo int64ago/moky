@@ -1,5 +1,4 @@
-import log from 'fancy-log'
-import chalk from 'chalk'
+import log from 'fancy-log-chalk'
 import { mapUrlToPage, getViewsMock } from '../lib/utils'
 
 export default function (options) {
@@ -9,8 +8,8 @@ export default function (options) {
     if (page) {
       if (page.startsWith('/')) page = page.substr(1)
       const data = getViewsMock(page, viewsMockPath, autoGenMock, defaultMock)
-      log(chalk.blue(`Render page: ${page}`))
-      options.verbose && log(chalk.blue(`Render data: ${JSON.stringify(data)}`))
+      log.blue(`Render page: ${page}`)
+      options.verbose && log.blue(`Render data: ${JSON.stringify(data)}`)
       await ctx.render(page, data)
     } else {
       await next()

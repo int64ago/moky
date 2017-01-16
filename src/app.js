@@ -4,8 +4,7 @@ import views from 'koa-views-2'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'
-import log from 'fancy-log'
-import chalk from 'chalk'
+import log from 'fancy-log-chalk'
 import { error, render, async } from './middleware'
 
 export { parseConfig } from './lib/utils'
@@ -24,12 +23,12 @@ export function moky (options = {}) {
   // Server favicon
   const fav = options.faviconPath || path.join(__dirname, '../assets/favicon.ico')
   app.use(favicon(fav))
-  log(chalk.cyan(`Server favicon: ${fav}`))
+  log.cyan(`Server favicon: ${fav}`)
 
   // Server static
   for (let [k, v] of Object.entries(options.publicPaths || {})) {
     app.use(mount(k, server(v)))
-    log(chalk.cyan(`Mount path ${k} -> ${v}`))
+    log.cyan(`Mount path ${k} -> ${v}`)
   }
 
   // Views map & render
@@ -40,5 +39,5 @@ export function moky (options = {}) {
 
   // Listen
   app.listen(options.localPort || 3000)
-  log(chalk.green(`Listen on port: ${options.localPort || 3000}`))
+  log.green(`Listen on port: ${options.localPort || 3000}`)
 }

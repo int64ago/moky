@@ -1,6 +1,5 @@
 import httpProxy from 'http-proxy'
-import log from 'fancy-log'
-import chalk from 'chalk'
+import log from 'fancy-log-chalk'
 import { parse } from 'url'
 
 export default function (options) {
@@ -13,10 +12,10 @@ export default function (options) {
     target,
     secure: false,
     headers: {
-      host: options.hostName || parse(target)['host'],
-    },
+      host: options.hostName || parse(target)['host']
+    }
   })
-  log(chalk.cyan(`Seting proxy target to ${target}`))
+  log.cyan(`Seting proxy target to ${target}`)
 
   // Handle proxy error
   proxy.on('error', function (err, req, res) {
@@ -24,7 +23,7 @@ export default function (options) {
       'Content-Type': 'text/plain'
     })
     res.end('Proxy Error!')
-    log.error(chalk.red(err))
+    log.red(err)
   })
   return proxy
 }

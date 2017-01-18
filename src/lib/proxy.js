@@ -1,5 +1,5 @@
 import httpProxy from 'http-proxy'
-import log from 'fancy-log-chalk'
+import { ServerResponse } from 'http'
 import { parse } from 'url'
 
 export default function (options) {
@@ -12,18 +12,36 @@ export default function (options) {
     target,
     secure: false,
     headers: {
-      host: options.hostName || parse(target)['host']
+      'host': options.hostName || parse(target)['host'],
+      'accept-encoding': 'gzip;q=0, deflate, sdch, br',
+      'x-proxy-header': 'true'
     }
   })
-  log.cyan(`Seting proxy target to ${target}`)
 
-  // Handle proxy error
-  proxy.on('error', function (err, req, res) {
-    res.writeHead(500, {
-      'Content-Type': 'text/plain'
-    })
-    res.end('Proxy Error!')
-    log.red(err)
+  proxy.on('end', function (req, res, proxyRes) {
+    res.emit('proxyEnd')
   })
-  return proxy
+
+  proxy.on('error', function (err, req, res) {
+    res.emit('proxyError', err)
+  })
+
+  return req => {
+    const res = new ServerResponse(req)
+    const bodyBuffers = []
+    res.write = chunk => {
+      bodyBuffers.push(chunk)
+      return true
+    }
+    return new Promise((resolve, reject) => {
+      proxy.web(req, res)
+      res.on('proxyEnd', () => {
+        res.body = Buffer.concat(bodyBuffers).toString('utf8')
+        resolve(res)
+      })
+      res.on('proxyError', err => {
+        reject(err)
+      })
+    })
+  }
 }

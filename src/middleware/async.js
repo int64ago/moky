@@ -15,11 +15,13 @@ export default function (options) {
         isFiltered = true
       }
     }
-    // Ref: https://github.com/koajs/koa/issues/198
-    ctx.response = false
+
     if (proxy) {
       log.yellow(`Proxy: ${ctx.path}`)
-      proxy.web(ctx.req, ctx.res)
+      const proxyRes = await proxy(ctx.req)
+      ctx.status = proxyRes.statusCode
+      ctx.set(proxyRes._headers)
+      ctx.body = proxyRes.body
     } else {
       let data = {}
       if (!isFiltered) {
@@ -27,10 +29,8 @@ export default function (options) {
       }
       !isFiltered && log.yellow(`Mock: ${ctx.path}`)
       options.verbose && log.yellow(`Data: ${JSON.stringify(data)}`)
-      ctx.res.writeHead(200, {
-        'Content-Type': 'application/json'
-      })
-      ctx.res.end(JSON.stringify(data))
+      ctx.set('Content-Type', 'application/json')
+      ctx.body = JSON.stringify(data)
     }
   }
 }

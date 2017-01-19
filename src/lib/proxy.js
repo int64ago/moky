@@ -1,22 +1,21 @@
 import httpProxy from 'http-proxy'
 import { ServerResponse } from 'http'
-import { parse } from 'url'
 
 export default function (options) {
-  // Proxy settings
   if (!options.proxyMaps[options.env]) {
     return null
   }
-  const target = options.proxyMaps[options.env]
-  const proxy = httpProxy.createProxyServer({
-    target,
-    secure: false,
+  const proxyOpts = {
+    target: options.proxyMaps[options.env],
     headers: {
-      'host': options.hostName || parse(target)['host'],
-      'accept-encoding': 'gzip;q=0, deflate, sdch, br',
+      'accept-encoding': 'gzip;q=0,deflate,sdch,br',
       'x-proxy-header': 'true'
     }
-  })
+  }
+  if (options.hostName) {
+    proxyOpts.headers['host'] = options.hostName
+  }
+  const proxy = httpProxy.createProxyServer(proxyOpts)
 
   proxy.on('end', function (req, res, proxyRes) {
     res.emit('proxyEnd')

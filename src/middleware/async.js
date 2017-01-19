@@ -17,7 +17,7 @@ export default function (options) {
     }
 
     if (proxy) {
-      log.yellow(`Proxy: ${ctx.path}`)
+      !isFiltered && log.yellow(`Proxy: ${ctx.path}`)
       const proxyRes = await proxy(ctx.req)
       ctx.status = proxyRes.statusCode
       ctx.set(proxyRes._headers)
@@ -33,7 +33,7 @@ export default function (options) {
         data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock, defaultMock)
       }
       !isFiltered && log.yellow(`Mock: ${ctx.path}`)
-      options.verbose && log.yellow(`Data: ${JSON.stringify(data)}`)
+      !isFiltered && options.verbose && log.yellow(`Data: ${JSON.stringify(data)}`)
       ctx.set('Content-Type', 'application/json')
       ctx.body = JSON.stringify(data)
     }

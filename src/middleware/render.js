@@ -1,10 +1,6 @@
 import log from 'fancy-log-chalk'
 import Proxy from '../lib/proxy'
-import { mapUrlToPage, getViewsMock } from '../lib/utils'
-
-const isJsonRes = proxyRes => {
-  return !!proxyRes._headers['x-proxy-header']
-}
+import { mapUrlToPage, getViewsMock, hasProxyHeader } from '../lib/utils'
 
 export default function (options) {
   return async (ctx, next) => {
@@ -24,7 +20,7 @@ export default function (options) {
           ctx.body = proxyRes.body
           return
         }
-        if (isJsonRes(proxyRes)) {
+        if (hasProxyHeader(proxyRes)) {
           data = JSON.parse(proxyRes.body)
         }
       }

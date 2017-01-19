@@ -72,3 +72,7 @@ export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false, de
   const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)
   return readObjFromFile(mockFile, autoGenMock, defaultMock)
 }
+
+export function hasProxyHeader (proxyRes) {
+  return !!proxyRes._headers['x-proxy-header']
+}

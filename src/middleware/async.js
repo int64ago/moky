@@ -1,7 +1,7 @@
 import pathToRegexp from 'path-to-regexp'
 import log from 'fancy-log-chalk'
 import Proxy from '../lib/proxy'
-import { getAsyncMock } from '../lib/utils'
+import { getAsyncMock, hasProxyHeader } from '../lib/utils'
 
 export default function (options) {
   const proxy = Proxy(options)
@@ -21,7 +21,12 @@ export default function (options) {
       const proxyRes = await proxy(ctx.req)
       ctx.status = proxyRes.statusCode
       ctx.set(proxyRes._headers)
-      ctx.body = proxyRes.body
+
+      let body = proxyRes.body
+      if (hasProxyHeader(proxyRes)) {
+        body = JSON.stringify({ 'moky says': 'Seems like a page, you should set urlMaps.' })
+      }
+      ctx.body = body
     } else {
       let data = {}
       if (!isFiltered) {

@@ -23,13 +23,8 @@ const argv = yargs
   .version(() => require('../package').version)
   .argv
 
-const options = parseConfig(path.resolve(argv.config))
-options.env = argv.env
-if (argv.verbose) {
-  options.verbose = argv.verbose
-}
-if (argv.new) {
-  options.autoGenMock = argv.new
-}
+const { env, verbose, new: autoGenMock } = argv
+const options = parseConfig(path.resolve(argv.c))
+Object.assign(options, { env, verbose, autoGenMock })
 
 moky(options)

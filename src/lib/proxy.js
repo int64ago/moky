@@ -1,10 +1,16 @@
+import url from 'url'
 import httpProxy from 'http-proxy'
 import { ServerResponse } from 'http'
 
 export default function (options) {
-  if (!options.proxyMaps[options.env]) {
+  // `env` support two ways:
+  // stable_dev as proxy url key
+  // http://192.168.1.1:2333 as proxy url
+  const target = options.proxyMaps[options.env] || options.env || ''
+  if (!url.parse(target)['protocol']) {
     return null
   }
+
   const proxyOpts = {
     target: options.proxyMaps[options.env],
     headers: {

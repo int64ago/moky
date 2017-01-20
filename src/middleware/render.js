@@ -9,8 +9,7 @@ export default function (options) {
     let page = mapUrlToPage(ctx.path, options.urlMaps)
     if (page) {
       if (page.startsWith('/')) page = page.substr(1)
-      log.blue(`Render page: ${page}`)
-      let data = getViewsMock(page, viewsMockPath, autoGenMock, defaultMock)
+      let data = {}
       if (proxy) {
         log.yellow(`Proxy page: ${ctx.path}`)
         const proxyRes = await proxy(ctx.req)
@@ -23,6 +22,9 @@ export default function (options) {
         if (hasProxyHeader(proxyRes)) {
           data = JSON.parse(proxyRes.body)
         }
+      } else {
+        log.blue(`Render page: ${page}`)
+        data = getViewsMock(page, viewsMockPath, autoGenMock, defaultMock)
       }
       options.verbose && log.blue(`Render data: ${JSON.stringify(data)}`)
       await ctx.render(page, data)

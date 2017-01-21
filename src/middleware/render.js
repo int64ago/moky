@@ -1,7 +1,7 @@
 import Logger from 'chalklog'
 import Proxy from '../lib/proxy'
 import { mapUrlToPage, getViewsMock, hasProxyHeader } from '../lib/utils'
-const log = Logger('moky')
+const log = new Logger('moky')
 
 export default function (options) {
   return async (ctx, next) => {

@@ -6,7 +6,7 @@ import favicon from 'koa-favicon'
 import mount from 'koa-mount'
 import Logger from 'chalklog'
 import { error, render, async } from './middleware'
-const log = Logger('moky')
+const log = new Logger('moky')
 
 export { parseConfig } from './lib/utils'
 

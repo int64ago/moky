@@ -4,7 +4,7 @@ import Logger from 'chalklog'
 import path from 'path'
 import fs from 'fs'
 import { createFileSync, writeJSONSync } from 'fs-extra'
-const log = Logger('moky')
+const log = new Logger('moky')
 
 const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
   const jsonName = file + '.json'

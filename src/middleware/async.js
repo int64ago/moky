@@ -1,7 +1,8 @@
 import pathToRegexp from 'path-to-regexp'
-import log from 'fancy-log-chalk'
+import Logger from 'chalklog'
 import Proxy from '../lib/proxy'
 import { getAsyncMock, hasProxyHeader } from '../lib/utils'
+const log = Logger('moky')
 
 export default function (options) {
   const proxy = Proxy(options)

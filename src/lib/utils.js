@@ -1,9 +1,10 @@
 import pathToRegexp from 'path-to-regexp'
 import decache from 'decache'
-import log from 'fancy-log-chalk'
+import Logger from 'chalklog'
 import path from 'path'
 import fs from 'fs'
 import { createFileSync, writeJSONSync } from 'fs-extra'
+const log = Logger('moky')
 
 const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
   const jsonName = file + '.json'

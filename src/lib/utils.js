@@ -54,23 +54,25 @@ export function parseConfig (absPath) {
   return config
 }
 
-export function getViewsMock (page, mockPath, autoGenMock = false, defaultMock = {}) {
-  if (!mockPath) return {}
+export function getViewsMock (page, options) {
+  const { viewsMockPath, autoGenMock = false, defaultMock = {} } = options
+  if (!viewsMockPath) return {}
   const commonMock = readObjFromFile(
-    path.join(mockPath, '__COMMON__'),
+    path.join(viewsMockPath, '__COMMON__'),
     autoGenMock,
     defaultMock
   )
-  const mockFile = path.join(mockPath, page)
+  const mockFile = path.join(viewsMockPath, page)
   return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
 }
 
-export function getAsyncMock (method, urlPath, mockPath, autoGenMock = false, defaultMock = {}) {
-  if (!mockPath) {
-    log.red(`urlPath: ${urlPath}, mockPath: ${mockPath}, not exists`)
+export function getAsyncMock (method, urlPath, options) {
+  const { asyncMockPath, autoGenMock = false, defaultMock = {} } = options
+  if (!asyncMockPath) {
+    log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
     return defaultMock
   }
-  const mockFile = path.join(mockPath, method.toLowerCase(), urlPath)
+  const mockFile = path.join(asyncMockPath, method.toLowerCase(), urlPath)
   return readObjFromFile(mockFile, autoGenMock, defaultMock)
 }
 

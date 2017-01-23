@@ -6,7 +6,6 @@ const log = new Logger('moky')
 
 export default function (options) {
   const proxy = Proxy(options)
-  const { asyncMockPath, autoGenMock, defaultMock } = options
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3
     let isFiltered = false
@@ -31,7 +30,7 @@ export default function (options) {
     } else {
       let data = {}
       if (!isFiltered) {
-        data = getAsyncMock(ctx.method, ctx.path, asyncMockPath, autoGenMock, defaultMock)
+        data = getAsyncMock(ctx.method, ctx.path, options)
       }
       !isFiltered && log.yellow(`Mock: ${ctx.path}`)
       !isFiltered && options.verbose && log.yellow(`Data: ${JSON.stringify(data)}`)

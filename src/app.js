@@ -4,9 +4,8 @@ import views from 'koa-views-2'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'
-import Logger from 'chalklog'
 import { error, render, async } from './middleware'
-const log = new Logger('moky')
+import { log } from './lib/utils'
 
 export { parseConfig } from './lib/utils'
 

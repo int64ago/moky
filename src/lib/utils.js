@@ -80,3 +80,12 @@ export function getAsyncMock (method, urlPath, options) {
 export function hasProxyHeader (proxyRes) {
   return !!proxyRes._headers['x-proxy-header']
 }
+
+export function isJSON (str) {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}

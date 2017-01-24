@@ -106,6 +106,7 @@ Usage: moky [options]
 Options:
   -c, --config   Configure file path                 [default: "moky.config.js"]
   -e, --env      Debug env, see <proxyMaps> in configure file  [default: "mock"]
+  -r, --write Write proxy data to mock file (1-write if not exist, 2-write even if exist) [default: "0"]
   -h, --help     Show help                                             [boolean]
   -V, --verbose  Show detail log
   -n, --new      Auto create mock file if not exists

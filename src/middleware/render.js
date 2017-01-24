@@ -1,5 +1,5 @@
 import Proxy from '../lib/proxy'
-import u from '../lib/utils'
+import * as u from '../lib/utils'
 
 export default function (options) {
   return async (ctx, next) => {
@@ -19,7 +19,6 @@ export default function (options) {
         }
         if (u.hasProxyHeader(proxyRes)) {
           data = JSON.parse(proxyRes.body)
-          // writeMockBack(data)
         }
       } else {
         u.log.blue(`Render page: ${page}`)

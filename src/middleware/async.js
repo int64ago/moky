@@ -1,6 +1,6 @@
 import pathToRegexp from 'path-to-regexp'
 import Proxy from '../lib/proxy'
-import u from '../lib/utils'
+import * as u from '../lib/utils'
 
 export default function (options) {
   const proxy = Proxy(options)
@@ -24,7 +24,7 @@ export default function (options) {
       if (u.hasProxyHeader(proxyRes)) {
         body = JSON.stringify({ 'moky says': 'Seems like a page, you should set urlMaps.' })
       } else if (u.isJSON(body)) {
-        // writeMockBack(data)
+        u.writeMockBack(ctx, options, JSON.parse(body))
       }
       ctx.body = body
     } else {

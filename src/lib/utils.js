@@ -3,7 +3,7 @@ import decache from 'decache'
 import Logger from 'chalklog'
 import path from 'path'
 import fs from 'fs'
-import { createFileSync, writeJSONSync } from 'fs-extra'
+import { createFileSync, writeJSONSync, removeSync } from 'fs-extra'
 
 export const log = new Logger('moky')
 
@@ -88,4 +88,33 @@ export function isJSON (str) {
     return false
   }
   return true
+}
+
+export function getPath (ctx, options) {
+  const { urlMaps, viewsMockPath, asyncMockPath } = options
+  // view request
+  let page = mapUrlToPage(ctx.path, urlMaps)
+  if (page) {
+    if (page.startsWith('/')) page = page.substr(1)
+    return path.join(viewsMockPath, page)
+  }
+  // async request
+  return path.join(asyncMockPath, ctx.method.toLowerCase(), ctx.path)
+}
+
+export function writeMockBack (ctx, options, data) {
+  // mock write option
+  const write = options.write / 1
+  const path = getPath(ctx, options)
+  const jsonName = path + '.json'
+  const jsName = path + '.js'
+
+  if (!write) return
+  if (write === 1 && (fs.existsSync(jsonName) || fs.existsSync(jsName))) return
+  if (fs.existsSync(jsName)) removeSync(jsName)
+
+  // Write to json file
+  writeJSONSync(jsonName, data)
+  log.yellow(`Write mock: ${jsonName}`)
+  options.verbose && log.yellow(`Write mock data: ${data}`)
 }

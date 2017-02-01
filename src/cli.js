@@ -12,7 +12,7 @@ const argv = yargs
   .alias('e', 'env')
   .describe('e', 'Debug env, see <proxyMaps> in configure file')
   .default('e', 'mock')
-  .alias('r', 'write')
+  .alias('r', 'rewrite')
   .describe('r', 'Write proxy data to mock file (1-write if not exist, 2-write even if exist)')
   .default('r', '0')
   .help('h')
@@ -26,8 +26,8 @@ const argv = yargs
   .version(() => require('../package').version)
   .argv
 
-const { env, verbose, write, new: autoGenMock } = argv
+const { env, verbose, rewrite, new: autoGenMock } = argv
 const options = parseConfig(path.resolve(argv.c))
-Object.assign(options, { env, verbose, write, autoGenMock })
+Object.assign(options, { env, verbose, rewrite, autoGenMock })
 
 moky(options)

@@ -104,13 +104,13 @@ export function getPath (ctx, options) {
 
 export function writeMockBack (ctx, options, data) {
   // mock write option
-  const write = options.write / 1
+  const rewrite = options.rewrite / 1
   const path = getPath(ctx, options)
   const jsonName = path + '.json'
   const jsName = path + '.js'
 
-  if (!write) return
-  if (write === 1 && (fs.existsSync(jsonName) || fs.existsSync(jsName))) return
+  if (!rewrite) return
+  if (rewrite === 1 && (fs.existsSync(jsonName) || fs.existsSync(jsName))) return
   if (fs.existsSync(jsName)) removeSync(jsName)
 
   // Write to json file

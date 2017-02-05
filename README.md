@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#">
-    <img alt="MOKY" src="https://cdn.int64ago.org/0oxtp9ie44vq7m7b7kqpvi.png"/>
+    <img alt="MOKY" src="https://cloud.githubusercontent.com/assets/2230882/22627374/0f829552-ebfd-11e6-90ba-b785434d2800.png"/>
   </a>
 </p>
 

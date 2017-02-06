@@ -11,7 +11,6 @@ const argv = yargs
   .default('c', 'moky.config.js')
   .alias('e', 'env')
   .describe('e', 'Debug env, see <proxyMaps> in configure file')
-  .default('e', 'mock')
   .alias('r', 'rewrite')
   .describe('r', 'Write proxy data to mock file (1-write if not exist, 2-write even if exist)')
   .default('r', '0')

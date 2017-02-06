@@ -12,7 +12,7 @@ export default function (options) {
   }
 
   const proxyOpts = {
-    target: options.proxyMaps[options.env],
+    target,
     headers: {
       'accept-encoding': 'gzip;q=0,deflate,sdch,br',
       'x-proxy-header': 'true'

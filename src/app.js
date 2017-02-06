@@ -5,12 +5,13 @@ import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'
 import { error, render, async } from './middleware'
-import { log } from './lib/utils'
+import { log, printProxyMaps } from './lib/utils'
 
 export { parseConfig } from './lib/utils'
 
 export function moky (options = {}) {
   if (!options.urlMaps) return
+  if (options.env && printProxyMaps(options)) return
 
   const app = new Koa()
 

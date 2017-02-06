@@ -2,6 +2,8 @@ import pathToRegexp from 'path-to-regexp'
 import decache from 'decache'
 import Logger from 'chalklog'
 import path from 'path'
+import chalk from 'chalk'
+import url from 'url'
 import fs from 'fs'
 import { createFileSync, writeJSONSync, removeSync } from 'fs-extra'
 
@@ -117,4 +119,17 @@ export function writeMockBack (ctx, options, data) {
   writeJSONSync(jsonName, data)
   log.yellow(`Write mock: ${jsonName}`)
   options.verbose && log.yellow(`Write mock data: ${data}`)
+}
+
+export function printProxyMaps (options = {}) {
+  let print = false
+  const proxies = Object.keys((options.proxyMaps || {}))
+  if (proxies.length === 0) {
+    print = 'No available proxyMaps'
+  } else if ((typeof options.env === 'boolean') || // key without value
+    (!url.parse(options.env)['protocol'] && !~proxies.indexOf(options.env))) {
+    print = `Available proxyMaps: ${proxies.map(p => chalk.inverse(p)).join(' ')}`
+  }
+  if (print) console.log(print)
+  return print
 }

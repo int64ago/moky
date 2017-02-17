@@ -1365,9 +1365,9 @@ form-data@~2.1.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-freemarker@^1.3.0:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/freemarker/-/freemarker-1.3.2.tgz#f10a4cf408d7a6474194a4ef0a385c4dae7e4775"
+freemarker@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/freemarker/-/freemarker-1.4.1.tgz#d4df942fa578270e39570d3d74ed44f5db1a1d37"
   dependencies:
     babel-runtime "^6.20.0"
 
@@ -1936,13 +1936,13 @@ koa-static@^3.0.0:
     debug "*"
     koa-send "^3.2.0"
 
-koa-views-2@^5.1.9:
-  version "5.1.9"
-  resolved "https://registry.yarnpkg.com/koa-views-2/-/koa-views-2-5.1.9.tgz#8b2871877c1ae2cd6b57d272748ee3da8af2e87b"
+koa-views-2@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/koa-views-2/-/koa-views-2-5.2.0.tgz#84a2d11c78396e62c8e8cff02350336c4fc0326d"
   dependencies:
     consolidate "^0.14.1"
     debug "^2.1.3"
-    freemarker "^1.3.0"
+    freemarker "^1.4.1"
     koa-send "^3.1.0"
     mz "^2.4.0"
 

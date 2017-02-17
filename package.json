@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "A proxy server with mock",
   "main": "dist/app.js",
   "files": [
@@ -19,7 +19,7 @@
     "koa-favicon": "^2.0.0",
     "koa-mount": "^2.0.0",
     "koa-static": "^3.0.0",
-    "koa-views-2": "^5.1.9",
+    "koa-views-2": "^5.2.0",
     "nunjucks": "^2.5.2",
     "path-to-regexp": "^1.6.0",
     "url": "^0.11.0",

@@ -8,9 +8,7 @@ import engine from './lib/engine'
 import { error, render, async } from './middleware'
 import { log, printProxyMaps } from './lib/utils'
 
-export { parseConfig } from './lib/utils'
-
-export function moky (options = {}) {
+export default function moky (options = {}) {
   if (!options.urlMaps) return
   if (options.env && printProxyMaps(options)) return
 

@@ -924,7 +924,7 @@ console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
 
-consolidate@^0.14.1:
+consolidate@^0.14.1, consolidate@^0.14.5:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/consolidate/-/consolidate-0.14.5.tgz#5a25047bc76f73072667c8cb52c989888f494c63"
   dependencies:
@@ -1936,13 +1936,12 @@ koa-static@^3.0.0:
     debug "*"
     koa-send "^3.2.0"
 
-koa-views-2@^5.2.0:
+koa-views@^5.2.0:
   version "5.2.0"
-  resolved "https://registry.yarnpkg.com/koa-views-2/-/koa-views-2-5.2.0.tgz#84a2d11c78396e62c8e8cff02350336c4fc0326d"
+  resolved "https://registry.yarnpkg.com/koa-views/-/koa-views-5.2.0.tgz#c4282eb50a4ed15a8732474b42e54e575d2e4593"
   dependencies:
     consolidate "^0.14.1"
     debug "^2.1.3"
-    freemarker "^1.4.1"
     koa-send "^3.1.0"
     mz "^2.4.0"
 

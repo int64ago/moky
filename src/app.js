@@ -1,9 +1,10 @@
 import Koa from 'koa'
 import path from 'path'
-import views from 'koa-views-2'
+import views from 'koa-views'
 import server from 'koa-static'
 import favicon from 'koa-favicon'
 import mount from 'koa-mount'
+import engine from './lib/engine'
 import { error, render, async } from './middleware'
 import { log, printProxyMaps } from './lib/utils'
 
@@ -16,7 +17,10 @@ export function moky (options = {}) {
   const app = new Koa()
 
   // View settings
-  app.use(views(options.viewsPath, options.viewConfig))
+  const viewConfig = Object.assign(options.viewConfig, {
+    engineSource: engine(options.viewsPath)
+  })
+  app.use(views(options.viewsPath, viewConfig))
 
   // Handle koa error
   app.use(error)

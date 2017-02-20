@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A proxy server with mock",
   "main": "dist/index.js",
   "files": [

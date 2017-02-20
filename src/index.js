@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import path from 'path'
 import app from './app'
 import { parseConfig } from './lib/utils'

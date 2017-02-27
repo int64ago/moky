@@ -1,7 +1,7 @@
-import consolidate from 'consolidate'
-import Freemarker from 'freemarker'
+const consolidate = require('consolidate')
+const Freemarker = require('freemarker')
 
-export default root => {
+module.exports = root => {
   const fm = new Freemarker({ root })
   return Object.assign(consolidate, {
     freemarker: (path, data) => {

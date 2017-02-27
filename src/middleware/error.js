@@ -1,4 +1,4 @@
-export default async function (ctx, next) {
+module.exports = async function (ctx, next) {
   try {
     await next()
   } catch (err) {

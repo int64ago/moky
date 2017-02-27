@@ -1,8 +1,8 @@
-import Proxy from '../lib/proxy'
-import { extname } from 'path'
-import * as u from '../lib/utils'
+const Proxy = require('../lib/proxy')
+const { extname } = require('path')
+const u = require('../lib/utils')
 
-export default function (options) {
+module.exports = function (options) {
   return async (ctx, next) => {
     const proxy = Proxy(options)
     let page = u.mapUrlToPage(ctx.path, options.urlMaps)

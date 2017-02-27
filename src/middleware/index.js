@@ -1,3 +1,3 @@
-export { default as async } from './async'
-export { default as error } from './error'
-export { default as render } from './render'
+exports.async = require('./async')
+exports.error = require('./error')
+exports.render = require('./render')

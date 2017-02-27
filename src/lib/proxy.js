@@ -1,8 +1,8 @@
-import url from 'url'
-import httpProxy from 'http-proxy'
-import { ServerResponse } from 'http'
+const url = require('url')
+const httpProxy = require('http-proxy')
+const { ServerResponse } = require('http')
 
-export default function (options) {
+module.exports = (options) => {
   // `env` support two ways:
   // stable_dev as proxy url key
   // http://192.168.1.1:2333 as proxy url

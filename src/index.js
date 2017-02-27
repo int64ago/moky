@@ -1,6 +1,6 @@
-import path from 'path'
-import app from './app'
-import { parseConfig } from './lib/utils'
+const path = require('path')
+const app = require('./app')
+const { parseConfig } = require('./lib/utils')
 
 const builder = {
   env: {
@@ -38,4 +38,4 @@ const handler = async (argv) => {
   app(options)
 }
 
-export { builder, handler }
+module.exports = { builder, handler }

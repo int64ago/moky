@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import yargs from 'yargs'
-import { builder, handler } from './index'
+const yargs = require('yargs')
+const { builder, handler } = require('./index')
 
 const argv = yargs
   .options(builder)

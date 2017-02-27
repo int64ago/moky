@@ -1,14 +1,14 @@
-import Koa from 'koa'
-import path from 'path'
-import views from 'koa-views'
-import server from 'koa-static'
-import favicon from 'koa-favicon'
-import mount from 'koa-mount'
-import engine from './lib/engine'
-import { error, render, async } from './middleware'
-import { log, printProxyMaps } from './lib/utils'
+const Koa = require('koa')
+const path = require('path')
+const views = require('koa-views')
+const server = require('koa-static')
+const favicon = require('koa-favicon')
+const mount = require('koa-mount')
+const engine = require('./lib/engine')
+const { error, render, async } = require('./middleware')
+const { log, printProxyMaps } = require('./lib/utils')
 
-export default function moky (options = {}) {
+module.exports = (options = {}) => {
   if (!options.urlMaps) return
   if (options.env && printProxyMaps(options)) return
 

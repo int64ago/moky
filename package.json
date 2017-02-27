@@ -2,12 +2,8 @@
   "name": "moky",
   "version": "1.7.2",
   "description": "A proxy server with mock",
-  "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "main": "src/index.js",
   "dependencies": {
-    "babel-runtime": "^6.18.0",
     "chalk": "^1.1.3",
     "chalklog": "^1.1.2",
     "consolidate": "^0.14.5",
@@ -17,7 +13,7 @@
     "fs-extra": "^1.0.0",
     "handlebars": "^4.0.5",
     "http-proxy": "^1.15.2",
-    "koa": "^2.0.0",
+    "koa": "^2.0.1",
     "koa-favicon": "^2.0.0",
     "koa-mount": "^2.0.0",
     "koa-static": "^3.0.0",
@@ -28,26 +24,22 @@
     "yargs": "^6.3.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-core": "^6.17.0",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-es2015": "^6.16.0",
-    "babel-preset-stage-2": "^6.17.0",
     "standard": "^8.5.0"
   },
   "scripts": {
-    "build": "babel src -d dist",
     "lint": "standard src/*.js src/**/*.js",
-    "lint:fix": "standard src/*.js src/**/*.js --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:fix": "standard src/*.js src/**/*.js --fix"
   },
   "preferGlobal": true,
   "bin": {
-    "moky": "dist/cli.js"
+    "moky": "src/cli.js"
+  },
+  "engines": {
+    "node": ">=7.6.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/int64ago/moky.git"
+    "url": "https://github.com/int64ago/moky.git"
   },
   "keywords": [
     "mock",

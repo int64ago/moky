@@ -1,24 +1,24 @@
-import pathToRegexp from 'path-to-regexp'
-import decache from 'decache'
-import Logger from 'chalklog'
-import path from 'path'
-import chalk from 'chalk'
-import url from 'url'
-import fs from 'fs'
-import { createFileSync, writeJSONSync, removeSync } from 'fs-extra'
+const pathToRegexp = require('path-to-regexp')
+const decache = require('decache')
+const Logger = require('chalklog')
+const path = require('path')
+const chalk = require('chalk')
+const url = require('url')
+const fs = require('fs')
+const { createFileSync, writeJSONSync, removeSync } = require('fs-extra')
 
-export const log = new Logger('moky')
+exports.log = new Logger('moky')
 
 const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
-    log.red(`${file}.js{on} doesn't exists`)
+    this.log.red(`${file}.js{on} doesn't exists`)
     // Auto create mock file
     if (autoGenMock) {
       createFileSync(jsonName)
       writeJSONSync(jsonName, defaultMock)
-      log.magenta(`Create file: ${jsonName}`)
+      this.log.magenta(`Create file: ${jsonName}`)
     }
     return defaultMock
   }
@@ -26,12 +26,12 @@ const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
     decache(file)
     return require(file)
   } catch (err) {
-    log.red(err)
+    this.log.red(err)
     return defaultMock
   }
 }
 
-export function mapUrlToPage (url, urlMaps) {
+exports.mapUrlToPage = (url, urlMaps) => {
   for (let k in urlMaps) {
     if (pathToRegexp(k).test(url)) {
       return urlMaps[k]
@@ -40,9 +40,9 @@ export function mapUrlToPage (url, urlMaps) {
   return null
 }
 
-export function parseConfig (absPath) {
+exports.parseConfig = (absPath) => {
   if (!fs.existsSync(absPath)) {
-    log.red(`File not found: ${absPath}`)
+    this.log.red(`File not found: ${absPath}`)
     return {}
   }
 
@@ -50,14 +50,14 @@ export function parseConfig (absPath) {
   // Required properties check
   for (let c of ['viewsPath', 'viewConfig', 'urlMaps']) {
     if (!config[c]) {
-      log.red(`<${c}> is required`)
+      this.log.red(`<${c}> is required`)
       return {}
     }
   }
   return config
 }
 
-export function getViewsMock (page, options) {
+exports.getViewsMock = (page, options) => {
   const { viewsMockPath, autoGenMock = false, defaultMock = {} } = options
   if (!viewsMockPath) return {}
   const commonMock = readObjFromFile(
@@ -69,21 +69,21 @@ export function getViewsMock (page, options) {
   return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
 }
 
-export function getAsyncMock (method, urlPath, options) {
+exports.getAsyncMock = (method, urlPath, options) => {
   const { asyncMockPath, autoGenMock = false, defaultMock = {} } = options
   if (!asyncMockPath) {
-    log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
+    this.log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
     return defaultMock
   }
   const mockFile = path.join(asyncMockPath, method.toLowerCase(), urlPath)
   return readObjFromFile(mockFile, autoGenMock, defaultMock)
 }
 
-export function hasProxyHeader (proxyRes) {
+exports.hasProxyHeader = (proxyRes) => {
   return !!proxyRes._headers['x-proxy-header']
 }
 
-export function isJSON (str) {
+exports.isJSON = (str) => {
   try {
     JSON.parse(str)
   } catch (e) {
@@ -92,10 +92,10 @@ export function isJSON (str) {
   return true
 }
 
-export function getPath (ctx, options) {
+exports.getPath = (ctx, options) => {
   const { urlMaps, viewsMockPath, asyncMockPath } = options
   // view request
-  let page = mapUrlToPage(ctx.path, urlMaps)
+  let page = this.mapUrlToPage(ctx.path, urlMaps)
   if (page) {
     if (page.startsWith('/')) page = page.substr(1)
     return path.join(viewsMockPath, page)
@@ -104,10 +104,10 @@ export function getPath (ctx, options) {
   return path.join(asyncMockPath, ctx.method.toLowerCase(), ctx.path)
 }
 
-export function writeMockBack (ctx, options, data) {
+exports.writeMockBack = (ctx, options, data) => {
   // mock write option
   const rewrite = options.rewrite / 1
-  const path = getPath(ctx, options)
+  const path = this.getPath(ctx, options)
   const jsonName = path + '.json'
   const jsName = path + '.js'
 
@@ -117,11 +117,11 @@ export function writeMockBack (ctx, options, data) {
 
   // Write to json file
   writeJSONSync(jsonName, data)
-  log.yellow(`Write mock: ${jsonName}`)
-  options.verbose && log.yellow(`Write mock data: ${data}`)
+  this.log.yellow(`Write mock: ${jsonName}`)
+  options.verbose && this.this.log.yellow(`Write mock data: ${data}`)
 }
 
-export function printProxyMaps (options = {}) {
+exports.printProxyMaps = (options = {}) => {
   let print = false
   const proxies = Object.keys((options.proxyMaps || {}))
   if (proxies.length === 0) {

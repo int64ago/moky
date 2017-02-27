@@ -1,8 +1,8 @@
-import pathToRegexp from 'path-to-regexp'
-import Proxy from '../lib/proxy'
-import * as u from '../lib/utils'
+const pathToRegexp = require('path-to-regexp')
+const Proxy = require('../lib/proxy')
+const u = require('../lib/utils')
 
-export default function (options) {
+module.exports = function (options) {
   const proxy = Proxy(options)
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3

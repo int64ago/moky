@@ -14,6 +14,8 @@ A proxy server with mock
 
 ## How to use
 
+> Node: v7.6.0+
+
 If you have experience in [webpack](https://github.com/webpack/webpack), it'll be a piece of cake!
 
 Here comes the quick start:
@@ -106,7 +108,7 @@ Usage: moky [options]
 Options:
   -c, --config   Configure file path                 [default: "moky.config.js"]
   -e, --env      Debug env, see <proxyMaps> in configure file
-  -r, --rewrite Write proxy data to mock file (1-write if not exist, 2-write even if exist) [default: "0"]
+  -r, --rewrite  Write proxy data to mock file (1-write if not exist, 2-write even if exist) [default: "0"]
   -h, --help     Show help                                             [boolean]
   -V, --verbose  Show detail log
   -n, --new      Auto create mock file if not exists
@@ -120,16 +122,12 @@ It's easy to integrate moky in your own cli app.
  - Install as dependencies: `npm i moky -S`
  - In the entry of your app:
  ```javascript
- import path from 'path'
- import { moky, parseConfig } from 'moky'
+const yargs = require('yargs')
+const { builder, handler } = require('moky')
 
- // get path of moky.config.js and env
- // you can use commander.js or yargs
+const argv = yargs.argv
 
- const options = parseConfig(path.resolve(config))
- options.env = env
-
- moky(options)
+handler(argv)
  ```
 For more, see `src/cli.js`
 
@@ -137,6 +135,7 @@ For more, see `src/cli.js`
 
  - Be tired with filling common views mock ? Try putting a `__COMMON__.js{on}` in `viewsMockPath` !
  - Mock files with js(Should be exported as CommonJS module) & json extension are friendly supported.
+ - Use `moky -e` for proxyMaps list, `moky -e <url>` & `moky -e <key>` both work well.
 
 ## License
 [![license][license-image]][license-url]

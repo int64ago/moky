@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "1.7.2",
+  "version": "1.8.1",
   "description": "A proxy server with mock",
   "main": "src/index.js",
   "dependencies": {
@@ -35,7 +35,7 @@
     "moky": "src/cli.js"
   },
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">= 7.6.0"
   },
   "repository": {
     "type": "git",

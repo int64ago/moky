@@ -3,7 +3,7 @@ const Proxy = require('../lib/proxy')
 const u = require('../lib/utils')
 
 module.exports = function (options) {
-  const proxy = Proxy(options)
+  const proxy = Proxy(options, true)
   return async ctx => {
     // Issue: https://github.com/int64ago/moky/issues/3
     let isFiltered = false

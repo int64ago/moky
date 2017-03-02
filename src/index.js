@@ -6,7 +6,7 @@ const builder = {
   e: {
     alias: 'env',
     default: false,
-    describe: 'Debug env, see <proxyMaps> in configure file'
+    describe: 'Proxy env, see <proxyMaps> in configure file'
   },
   i: {
     alias: 'init',

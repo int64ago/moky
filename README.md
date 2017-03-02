@@ -110,11 +110,13 @@ The `moky` has integrated some major template engines, if your template is one o
 Usage: moky [options]
 
 Options:
+  -e, --env      Proxy env, see <proxyMaps> in configure file   [default: false]
+  -i, --init     Create a config file in current directofy      [default: false]
   -c, --config   Configure file path                 [default: "moky.config.js"]
-  -e, --env      Debug env, see <proxyMaps> in configure file
-  -r, --rewrite  Write proxy data to mock file (1-write if not exist, 2-write even if exist) [default: "0"]
+  -r, --rewrite  Write proxy data to mock file (1-write if not exist, 2-write
+                 even if exist)                                     [default: 0]
+  -V, --verbose  Show detail logs                               [default: false]
   -h, --help     Show help                                             [boolean]
-  -V, --verbose  Show detail log
   -v, --version  Show version number                                   [boolean]
 ```
 
@@ -141,6 +143,7 @@ For more, see `src/cli.js`
  - Be tired with filling common views mock ? Try putting a `__COMMON__.js{on}` in `viewsMockPath` !
  - Mock files with js(Should be exported as CommonJS module) & json extension are friendly supported.
  - Use `moky -e` for proxyMaps list, `moky -e <url>` & `moky -e <key>` both work well.
+ - `--rewrite` option is ONLY for async request.
 
 ## License
 [![license][license-image]][license-url]

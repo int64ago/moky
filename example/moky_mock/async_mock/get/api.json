@@ -1,0 +1,45 @@
+{
+  "results": [{
+    "gender": "female",
+    "name": {
+      "title": "mrs",
+      "first": "michelle",
+      "last": "lange"
+    },
+    "location": {
+      "street": "4971 tannenweg",
+      "city": "soest",
+      "state": "nordrhein-westfalen",
+      "postcode": 74826
+    },
+    "email": "michelle.lange@example.com",
+    "login": {
+      "username": "redelephant709",
+      "password": "22222222",
+      "salt": "M9yPb40f",
+      "md5": "1479b5e42e47ffd11d07a567aa23ad98",
+      "sha1": "dcb6fd45830256b95846c3bc77ab419b1fd24a31",
+      "sha256": "5afa880c431e7a9494fd06746328ae61da7b535c4927028f40c59e4698bb5968"
+    },
+    "dob": "1951-02-10 00:02:08",
+    "registered": "2013-07-06 15:56:34",
+    "phone": "0642-8501204",
+    "cell": "0173-7302455",
+    "id": {
+      "name": "",
+      "value": null
+    },
+    "picture": {
+      "large": "https://randomuser.me/api/portraits/women/21.jpg",
+      "medium": "https://randomuser.me/api/portraits/med/women/21.jpg",
+      "thumbnail": "https://randomuser.me/api/portraits/thumb/women/21.jpg"
+    },
+    "nat": "DE"
+  }],
+  "info": {
+    "seed": "d308a5206e7cddf9",
+    "results": 1,
+    "page": 1,
+    "version": "1.1"
+  }
+}

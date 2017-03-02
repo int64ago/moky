@@ -40,7 +40,7 @@ module.exports = (options = {}) => {
   // Others, pass to proxy or asyncMock
   app.use(async(options))
 
-  // Listen
-  app.listen(options.localPort || 3000)
-  log.green(`Listen on port: ${options.localPort || 3000}`)
+  const port = options.localPort || 3000
+  app.listen(port)
+  log.green(`Listen on port: ${port}`)
 }

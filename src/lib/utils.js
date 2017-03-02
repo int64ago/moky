@@ -5,21 +5,15 @@ const path = require('path')
 const chalk = require('chalk')
 const url = require('url')
 const fs = require('fs')
-const { createFileSync, writeJSONSync, removeSync } = require('fs-extra')
+const { copy, writeJSONSync, removeSync, existsSync } = require('fs-extra')
 
 exports.log = new Logger('moky')
 
-const readObjFromFile = (file, autoGenMock = false, defaultMock = {}) => {
+const readObj = (file, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
     this.log.red(`${file}.js{on} doesn't exists`)
-    // Auto create mock file
-    if (autoGenMock) {
-      createFileSync(jsonName)
-      writeJSONSync(jsonName, defaultMock)
-      this.log.magenta(`Create file: ${jsonName}`)
-    }
     return defaultMock
   }
   try {
@@ -58,25 +52,24 @@ exports.parseConfig = (absPath) => {
 }
 
 exports.getViewsMock = (page, options) => {
-  const { viewsMockPath, autoGenMock = false, defaultMock = {} } = options
+  const { viewsMockPath } = options
   if (!viewsMockPath) return {}
-  const commonMock = readObjFromFile(
-    path.join(viewsMockPath, '__COMMON__'),
-    autoGenMock,
-    defaultMock
-  )
+
+  const commonFile = path.join(viewsMockPath, '__COMMON__')
+  const commonMock = readObj(commonFile)
+
   const mockFile = path.join(viewsMockPath, page)
-  return Object.assign(commonMock, readObjFromFile(mockFile, autoGenMock))
+  return Object.assign(commonMock, readObj(mockFile))
 }
 
 exports.getAsyncMock = (method, urlPath, options) => {
-  const { asyncMockPath, autoGenMock = false, defaultMock = {} } = options
+  const { asyncMockPath, defaultMock = {} } = options
   if (!asyncMockPath) {
     this.log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
     return defaultMock
   }
   const mockFile = path.join(asyncMockPath, method.toLowerCase(), urlPath)
-  return readObjFromFile(mockFile, autoGenMock, defaultMock)
+  return readObj(mockFile, defaultMock)
 }
 
 exports.hasProxyHeader = (proxyRes) => {
@@ -132,4 +125,18 @@ exports.printProxyMaps = (options = {}) => {
   }
   if (print) console.log(print)
   return print
+}
+
+exports.init = (name) => {
+  const MOKY_CONFIG = 'moky.config.js'
+
+  const source = path.join(__dirname, `../../example/${MOKY_CONFIG}`)
+  const dest = path.join(process.cwd(), name || MOKY_CONFIG)
+
+  if (existsSync(dest)) return this.log.red(`File exists: ${dest}`)
+
+  copy(source, dest, err => {
+    if (err) return this.log.red('Init failed: ', err)
+    this.log.green(`Create ${name || MOKY_CONFIG} successfully.`)
+  })
 }

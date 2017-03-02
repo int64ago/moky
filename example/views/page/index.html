@@ -12,7 +12,7 @@
     </div>
   </body>
   <script>
-    fetch('/v0/item/2921983.json').then(res => {
+    fetch('/api').then(res => {
       return res.json();
     }).then(json => {
       document.querySelector('#app').innerText = JSON.stringify(json);

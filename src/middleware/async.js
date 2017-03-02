@@ -1,21 +1,11 @@
-const pathToRegexp = require('path-to-regexp')
 const Proxy = require('../lib/proxy')
 const u = require('../lib/utils')
 
 module.exports = function (options) {
   const proxy = Proxy(options, true)
   return async ctx => {
-    // Issue: https://github.com/int64ago/moky/issues/3
-    let isFiltered = false
-    const { filteredUrls = [] } = options
-    for (let k of filteredUrls) {
-      if (pathToRegexp(k).test(ctx.path)) {
-        isFiltered = true
-      }
-    }
-
     if (proxy) {
-      !isFiltered && u.log.yellow(`Proxy: ${ctx.path}`)
+      u.log.yellow(`Proxy: ${ctx.path}`)
       const proxyRes = await proxy(ctx.req)
       ctx.status = proxyRes.statusCode
       ctx.set(proxyRes._headers)
@@ -28,12 +18,10 @@ module.exports = function (options) {
       }
       ctx.body = body
     } else {
-      let data = {}
-      if (!isFiltered) {
-        data = u.getAsyncMock(ctx.method, ctx.path, options)
-      }
-      !isFiltered && u.log.yellow(`Mock: ${ctx.path}`)
-      !isFiltered && options.verbose && u.log.yellow(`Data: ${JSON.stringify(data)}`)
+      const data = u.getAsyncMock(ctx.method, ctx.path, options)
+      u.log.yellow(`Mock: ${ctx.path}`)
+
+      options.verbose && u.log.yellow(`Data: ${JSON.stringify(data)}`)
       ctx.set('Content-Type', 'application/json')
       ctx.body = JSON.stringify(data)
     }

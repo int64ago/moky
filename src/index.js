@@ -1,39 +1,44 @@
 const path = require('path')
 const app = require('./app')
-const { parseConfig } = require('./lib/utils')
+const { init, parseConfig } = require('./lib/utils')
 
 const builder = {
-  env: {
-    alias: 'e',
+  e: {
+    alias: 'env',
     default: false,
     describe: 'Debug env, see <proxyMaps> in configure file'
   },
-  config: {
-    alias: 'c',
+  i: {
+    alias: 'init',
+    default: false,
+    describe: 'Create a config file in current directofy'
+  },
+  c: {
+    alias: 'config',
     default: 'moky.config.js',
     describe: 'Configure file path'
   },
-  new: {
-    alias: 'n',
-    default: false,
-    describe: 'Auto create mock file if not exists'
-  },
-  rewrite: {
-    alias: 'r',
+  r: {
+    alias: 'rewrite',
     default: 0,
     describe: 'Write proxy data to mock file (1-write if not exist, 2-write even if exist)'
   },
-  verbose: {
-    alias: 'V',
+  V: {
+    alias: 'verbose',
     default: false,
-    describe: 'Show detail log'
+    describe: 'Show detail logs'
   }
 }
 
 const handler = async (argv) => {
-  const { env, verbose, rewrite, new: autoGenMock } = argv
-  const options = parseConfig(path.resolve(argv.c))
-  Object.assign(options, { env, verbose, rewrite, autoGenMock })
+  if (argv.init) {
+    const name = typeof argv.init === 'string' ? argv.init : ''
+    return init(name)
+  }
+
+  const { env, verbose, rewrite } = argv
+  const options = parseConfig(path.resolve(argv.config))
+  Object.assign(options, { env, verbose, rewrite })
 
   app(options)
 }

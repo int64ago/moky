@@ -1,41 +1,53 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
-  /* Listen port for moky server, OPTIONAL */
+  // Listen port for moky server, OPTIONAL
   localPort: 3000,
-  /* Show detail log, OPTIONAL(default false) */
-  verbose: false,
-  /* Auto create mock file if not exists, OPTIONAL */
-  autoGenMock: false,
-  /* Asnyc api mock data, OPTIONAL */
-  asyncMockPath: path.join(__dirname, 'moky_mock', 'async_mock'),
-  /* Template mock data, OPTIONAL */
-  viewsMockPath: path.join(__dirname, 'moky_mock', 'views_mock'),
-  /* Default mock data, OPTIONAL */
+
+  // Asnyc api mock directory, OPTIONAL
+  // eg: GET /test/api  -> get/test/api.js{on}
+  asyncMockPath: path.join(__dirname, 'moky_mock/async_mock'),
+
+  // Template mock directory, OPTIONAL
+  // eg: /user/home  ->  user/home.js{on}
+  // Tips: this's useful ONLY if your application is template-engine based 
+  viewsMockPath: path.join(__dirname, 'moky_mock/views_mock'),
+
+  // Default async mock data, OPTIONAL
+  // If mock file is missing or empty, then return this
   defaultMock: {},
-  /* Root directory for template rendering, REQUIRED */
+
+  // Root directory for template rendering, REQUIRED
   viewsPath: path.join(__dirname, 'views'),
-  /* Path of favicon.ico, OPTIONAL */
-  faviconPath: path.join(__dirname, 'public', 'favicon.ico'),
-  /* Static router, OPTIONAL but usually required */
+
+  // Static router, OPTIONAL but usually required
   publicPaths: {
-    '/css': path.join(__dirname, 'public', 'css'),
-    '/js': path.join(__dirname, 'public', 'js'),
+    '/css': path.join(__dirname, 'public/css'),
+    '/js': path.join(__dirname, 'public/js'),
   },
-  /* Template engine settings, the same as koa-views, REQUIRED */
+
+  // Template engine settings, the same as koa-views, REQUIRED
   viewConfig: {
     extension: 'html',
     map: { html: 'nunjucks' },
   },
-  /* Host name of proxy, works for `virtual hosts`, OPTIONAL */
-  hostName: 'hacker-news.firebaseio.com',
-  /* Settings for proxy, OPTIONAL */
+
+  // Host name of proxy, works for `virtual hosts`, OPTIONAL
+  hostName: 'randomuser.me',
+
+  // Settings for proxy, OPTIONAL
+  // Value can be like: <URL1>#<URL2>,
+  // here <URL1> is for page proxy, <URL2> is for async api proxy
+  // Tips: if <URL1> is missing, then page uses mock data
   proxyMaps: {
-    dev: 'https://104.154.130.226:443',
+    dev: '#https://104.31.90.126:443',
     local: 'http://localhost:8080',
   },
-  /* Not show logs if url is in the list, OPTIONAL */
-  filteredUrls: [],
-  /* Settings for template page routing, REQUIRED */
-  urlMaps: require('./moky.urlMaps'),
+
+  // Settings for template page routing, REQUIRED
+  // Tips: path prefix and file suffix are not required
+  urlMaps: {
+    '/': 'index',
+    '/page': 'page/index',
+  },
 }

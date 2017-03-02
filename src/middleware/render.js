@@ -1,5 +1,4 @@
 const Proxy = require('../lib/proxy')
-const { extname } = require('path')
 const u = require('../lib/utils')
 
 module.exports = function (options) {

@@ -30,6 +30,9 @@
  - 试着打开 `http://localhost:3000` 和 `http://localhost:3000/page` 两个页面（mock 模式，用本地模拟数据）
  - 终止再重新运行 `moky -e dev`，刷新刚刚两个页面（此时是 proxy 模式，异步接口会从 proxy 的目标机器拉数据）
 
+使用截图：
+![使用截图][screenshot]
+
 ## 配置
 
 下面是 example 例子里的配置文件，每个项目都需要根据需求具体设置
@@ -177,3 +180,5 @@ handler(argv)
 
 [style-url]: https://github.com/airbnb/javascript
 [style-image]: https://img.shields.io/badge/code%20style-airbnb-brightgreen.svg
+
+[screenshot]: https://cloud.githubusercontent.com/assets/2230882/23556263/f471b648-0066-11e7-9fb9-b48955d4c83d.png

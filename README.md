@@ -32,6 +32,9 @@ If you want a quick try, clone the project to disk
  - Open `http://localhost:3000` & `http://localhost:3000/page` (default to mock mode)
  - Exit and **re**run `moky -e dev`, refresh two pages (async request is pass to proxy)
 
+Screenshot:
+![Screenshot][screenshot]
+
 ## Configure
 
 The following is just a example, edit as your ways.
@@ -177,3 +180,5 @@ If your server is NodeJS, you can patch in middleware; if it's Java with Spring 
 
 [style-url]: https://github.com/airbnb/javascript
 [style-image]: https://img.shields.io/badge/code%20style-airbnb-brightgreen.svg
+
+[screenshot]: https://cloud.githubusercontent.com/assets/2230882/23556263/f471b648-0066-11e7-9fb9-b48955d4c83d.png

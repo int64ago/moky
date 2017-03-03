@@ -27,7 +27,7 @@
 
  - 进入 example 目录 `cd moky/example`
  - 直接运行 `moky`
- - 试着打开 `http://localhost:3000` 和 `http://localhost:3000/page` 两个页面（模式是 mock 模式，即使用本地模拟数据）
+ - 试着打开 `http://localhost:3000` 和 `http://localhost:3000/page` 两个页面（mock 模式，用本地模拟数据）
  - 终止再重新运行 `moky -e dev`，刷新刚刚两个页面（此时是 proxy 模式，异步接口会从 proxy 的目标机器拉数据）
 
 ## 配置
@@ -56,7 +56,7 @@ module.exports = {
   // 如果异步接口的 mock 文件缺失或者空，则会返回这里设置的值
   defaultMock: {},
 
-  // 模板根路径，如果你是单页应用，那么直接设置为入口文件的路径即可，必填
+  // 模板根路径，如果你是单页应用，那么直接设置为入口文件所在目录即可，必填
   viewsPath: path.join(__dirname, 'views'),
 
   // 静态文件路由，可选，不过一般都会设置（没有静态文件的应用很少吧？！）
@@ -65,7 +65,7 @@ module.exports = {
     '/js': path.join(__dirname, 'public/js'),
   },
 
-  // 模板引擎设置的参数，跟 koa-views 是一样的，必填
+  // 模板引擎设置的参数，跟 koa-views 参数一致，必填
   viewConfig: {
     extension: 'html',
     map: { html: 'nunjucks' },
@@ -101,7 +101,7 @@ module.exports = {
   - nunjucks
   - ejs
 
-**但是**，因为我们使用了 [koa-views](https://github.com/queckezz/koa-views) ，并且 koa-views 使用了 [consolidate.js](https://github.com/tj/consolidate.js)，理论上 consolidate 支持的模板引擎都支持，如果使用中缺少，可以给我们提 PR，我们会即时加上
+**但是**，因为使用了 [koa-views](https://github.com/queckezz/koa-views) ，并且 koa-views 使用了 [consolidate.js](https://github.com/tj/consolidate.js)，理论上 consolidate 支持的模板引擎都支持，如果使用中缺少，可以提 PR，会即时加上
 
 ## 更多
 
@@ -121,7 +121,7 @@ Options:
   -v, --version  Show version number                                   [boolean]
 ```
 
-## 与你的应用集成
+## 与其它应用集成
 
 moky 允许与其它命令行工具应用集成
 
@@ -138,16 +138,16 @@ const argv = yargs
 
 handler(argv)
  ```
-可以看 `src/cli.js` 了解
+具体可参考 `src/cli.js`
 
 ## 小技巧
 
- - 如果使用的模板引擎渲染好页面，一般会包含一些公共数据，如侧边栏，可以放到 `viewsMockPath` 的 `__COMMON__.js{on}` 文件里， moky 会自动每次追加上
- - mock 文件除了 json 格式，还支持 js（需要按 CommonJS 格式导出），所以理论上可以写任何你需要的复杂逻辑
- - 可以通过 `moky -e` 查看可用的代理列表，代理格式除了 `moky -e <key>` 还可以直接跟 url `moky -e <url>` 用于临时目的
- - 考虑到应用的复杂性，`--rewrite` 命令参数只针对异步接口生效
+ - 如果使用的模板引擎渲染页面，一般会包含一些公共数据，如侧边栏菜单等，这类 mock 数据可以放到 `viewsMockPath` 的 `__COMMON__.js{on}` 文件里， moky 会自动每次追加上
+ - mock 文件除了 JSON 格式，还支持 JS（需要按 CommonJS 格式导出），所以理论上可以写任何你需要的复杂逻辑
+ - 可以通过 `moky -e` 查看可用的代理列表，代理除了通过在 `proxyMaps` 设置的 `<key>` 指定 `moky -e <key>`，还可以直接跟 url `moky -e <url>` 用于临时目的
+ - 考虑到应用的复杂性，`--rewrite` 命令参数只针对异步接口生效，会用 proxy 数据覆盖本地 mock 数据，不理解的话建议不要随意使用
 
-## 关于同步页面的代理
+## 同步页面的代理
 
  > 如果你的应用是基于 MV* 框架的单页应用，这部分可以跳过
 
@@ -155,9 +155,9 @@ handler(argv)
 
 在 mock 模式下，moky 会先从本地拿到对应的 mock JSON 数据，然后渲染到模板文件上，返回给客户端渲染好的 HTML。但是在 proxy 模式下，服务端会直接返回渲染好的 HTML 页面，通常是无法从 HTML 页面里剥离出渲染上去的数据的
 
-因此，在真实使用中，我们需要合理的去给服务端**打补丁**，其中最重要的一步就是让服务端知道请求是谁发出来的。在 moky 里，每一个请求都会加上 `X-Proxy-Header: true` 的头，你如何给你的服务端打补丁这取决于你的服务端类型。如果服务端接收到 moky 的这个头，仅仅返回将要渲染到模板上的数据即可，并且回写上述的头，剩下的事 moky 会处理好（流程跟 mock 模式一样）
+因此，在真实使用中，需要合理地给服务端**打补丁**，其中最重要的一步就是让服务端知道请求是谁发出来的。在 moky 里，每一个请求都会加上 `X-Proxy-Header: true` 的头，如何给服务端打补丁这取决于服务端类型。如果服务端接收到 moky 的这个头，仅仅返回将要渲染到模板上的数据即可，并且回写上述的头，剩下的事 moky 会处理好（其实剩下流程跟 mock 模式一样）
 
-如果你的服务端是 NodeJS，你可以把补丁写在中间件里，如果是 Spring MVC，可以写在拦截器里，这些都不会影响正常的业务逻辑。
+如果服务端是 NodeJS，你可以把补丁写在中间件里，如果是 Spring MVC，可以写在拦截器里，其它类似，这些都不会影响正常的业务逻辑。
 
 ## 协议
 [![license][license-image]][license-url]

@@ -1,7 +1,7 @@
 const Proxy = require('../lib/proxy')
 const u = require('../lib/utils')
 
-module.exports = function (options) {
+module.exports = (options) => {
   const proxy = Proxy(options, true)
 
   return async ctx => {

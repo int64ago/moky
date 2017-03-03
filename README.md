@@ -12,11 +12,13 @@
 
 A proxy server with mock
 
+[中文 README](README-zh_CN.md)
+
 ## How to use
 
 > Node: v7.6.0+
 
- - `npm i moky -g`
+ - `npm i moky -g` (or `yarn global add moky`)
  - Run `moky -i` (if no config file), init a new `moky.config.js`
  - Modify `moky.config.js`
  - Run `moky` in the same directory with `moky.config.js`
@@ -144,6 +146,18 @@ For more, see `src/cli.js`
  - Mock files with js(Should be exported as CommonJS module) & json extension are friendly supported.
  - Use `moky -e` for proxyMaps list, `moky -e <url>` & `moky -e <key>` both work well.
  - `--rewrite` option is ONLY for async request.
+
+## About views(page) proxy
+
+> If your application is SPA, you can ignore this part.
+
+If we set views in proxy mode, actually we can't work in right way.
+
+In mock mode, we get JSON data from local dist and render it with template files, at last, we see the rendered HTML file. But in proxy mode, the server returns HTML file by default, we can't extract JSON data from HTML file!
+
+Then, in real world, we need to **patch** server, the most import is making the server recognize the sender of requests. In moky, we append a `X-Proxy-Header: true` header in every requests, you should patch your server in a proper way(which depends on the type of the engine). If you receive such header, just return the data you will render in template file, and write back the header.
+
+If your server is NodeJS, you can patch in middleware; if it's Java with Spring MVC, you can patch in interceptor. These will not break normal logic neither.
 
 ## License
 [![license][license-image]][license-url]

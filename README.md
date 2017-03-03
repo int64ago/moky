@@ -128,7 +128,7 @@ It's easy to integrate moky in your own cli app.
  - In the entry of your app:
  ```javascript
 const yargs = require('yargs')
-const { builder, handler } = require('./index')
+const { builder, handler } = require('moky')
 
 const argv = yargs
   .options(builder)

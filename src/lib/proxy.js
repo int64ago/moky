@@ -29,11 +29,11 @@ module.exports = (options, isAsync = false) => {
   }
   const proxy = httpProxy.createProxyServer(proxyOpts)
 
-  proxy.on('end', function (req, res, proxyRes) {
+  proxy.on('end', (req, res, proxyRes) => {
     res.emit('proxyEnd')
   })
 
-  proxy.on('error', function (err, req, res) {
+  proxy.on('error', (err, req, res) => {
     res.emit('proxyError', err)
   })
 

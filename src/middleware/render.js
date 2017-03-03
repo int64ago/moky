@@ -1,13 +1,15 @@
 const Proxy = require('../lib/proxy')
 const u = require('../lib/utils')
 
-module.exports = function (options) {
+module.exports = (options) => {
   return async (ctx, next) => {
     const proxy = Proxy(options)
     let page = u.mapUrlToPage(ctx.path, options.urlMaps)
+
     if (page) {
       if (page.startsWith('/')) page = page.substr(1)
       let data = {}
+
       if (proxy) {
         u.log.yellow(`Proxy page: ${ctx.path}`)
         const proxyRes = await proxy(ctx.req)
@@ -24,6 +26,7 @@ module.exports = function (options) {
         u.log.blue(`Render page: ${page}`)
         data = u.getViewsMock(page, options)
       }
+
       options.verbose && u.log.blue(`Render data: ${JSON.stringify(data)}`)
       await ctx.render(page, data)
     } else {

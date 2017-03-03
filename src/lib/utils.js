@@ -4,7 +4,6 @@ const Logger = require('chalklog')
 const path = require('path')
 const chalk = require('chalk')
 const url = require('url')
-const fs = require('fs')
 const { copy, writeJSONSync, removeSync, existsSync } = require('fs-extra')
 
 exports.log = new Logger('moky')
@@ -12,7 +11,7 @@ exports.log = new Logger('moky')
 const readObj = (file, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
-  if (!fs.existsSync(jsonName) && !fs.existsSync(jsName)) {
+  if (!existsSync(jsonName) && !existsSync(jsName)) {
     this.log.red(`${file}.js{on} doesn't exists`)
     return defaultMock
   }
@@ -35,12 +34,12 @@ exports.mapUrlToPage = (url, urlMaps) => {
 }
 
 exports.parseConfig = (absPath) => {
-  if (!fs.existsSync(absPath)) {
+  if (!existsSync(absPath)) {
     this.log.red(`File not found: ${absPath}`)
     return {}
   }
 
-  let config = require(absPath)
+  const config = require(absPath)
   // Required properties check
   for (let c of ['viewsPath', 'viewConfig', 'urlMaps']) {
     if (!config[c]) {
@@ -105,8 +104,8 @@ exports.writeMockBack = (ctx, options, data) => {
   const jsName = path + '.js'
 
   if (!rewrite) return
-  if (rewrite === 1 && (fs.existsSync(jsonName) || fs.existsSync(jsName))) return
-  if (fs.existsSync(jsName)) removeSync(jsName)
+  if (rewrite === 1 && (existsSync(jsonName) || existsSync(jsName))) return
+  if (existsSync(jsName)) removeSync(jsName)
 
   // Write to json file
   writeJSONSync(jsonName, data)
@@ -117,12 +116,14 @@ exports.writeMockBack = (ctx, options, data) => {
 exports.printProxyMaps = (options = {}) => {
   let print = false
   const proxies = Object.keys((options.proxyMaps || {}))
+
   if (proxies.length === 0) {
     print = 'No available proxyMaps'
   } else if ((typeof options.env === 'boolean') || // key without value
     (!url.parse(options.env)['protocol'] && !~proxies.indexOf(options.env))) {
     print = `Available proxyMaps: ${proxies.map(p => chalk.inverse(p)).join(' ')}`
   }
+
   if (print) console.log(print)
   return print
 }

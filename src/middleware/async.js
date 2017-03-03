@@ -3,6 +3,7 @@ const u = require('../lib/utils')
 
 module.exports = function (options) {
   const proxy = Proxy(options, true)
+
   return async ctx => {
     if (proxy) {
       u.log.yellow(`Proxy: ${ctx.path}`)

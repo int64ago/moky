@@ -32,6 +32,7 @@ const builder = {
 
 const handler = async (argv) => {
   if (argv.init) {
+    // custom name for config file
     const name = typeof argv.init === 'string' ? argv.init : ''
     return init(name)
   }

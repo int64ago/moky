@@ -8,6 +8,8 @@ const engine = require('./lib/engine')
 const { error, render, async } = require('./middleware')
 const { log, printProxyMaps } = require('./lib/utils')
 
+const faviconPath = path.join(__dirname, '../example/public/favicon.ico')
+
 module.exports = (options = {}) => {
   if (!options.urlMaps) return
   if (options.env && printProxyMaps(options)) return
@@ -24,7 +26,7 @@ module.exports = (options = {}) => {
   app.use(error)
 
   // Server favicon
-  const fav = options.faviconPath || path.join(__dirname, '../assets/favicon.ico')
+  const fav = options.faviconPath || faviconPath
   app.use(favicon(fav))
   log.cyan(`Server favicon: ${fav}`)
 

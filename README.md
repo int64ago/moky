@@ -125,7 +125,7 @@ Options:
 
 ## Integrate in your app
 
-It's easy to integrate moky in your own cli app.
+It's easy to integrate `moky` in your own cli app.
 
  - Install as dependencies: `npm i moky -S`
  - In the entry of your app:
@@ -156,7 +156,7 @@ If we set views in proxy mode, actually we can't work in right way.
 
 In mock mode, we get JSON data from local dist and render it with template files, at last, we see the rendered HTML file. But in proxy mode, the server returns HTML file by default, we can't extract JSON data from HTML file!
 
-Then, in real world, we need to **patch** server, the most import is making the server recognize the sender of requests. In moky, we append a `X-Proxy-Header: true` header in every requests, you should patch your server in a proper way(which depends on the type of the engine). If you receive such header, just return the data you will render in template file, and write back the header.
+Then, in real world, we need to **patch** server, the most import is making the server recognize the sender of requests. In `moky`, we append a `X-Proxy-Header: true` header in every requests, you should patch your server in a proper way(which depends on the type of the engine). If you receive such header, just return the data you will render in template file, and write back the header.
 
 If your server is NodeJS, you can patch in middleware; if it's Java with Spring MVC, you can patch in interceptor. These will not break normal logic neither.
 

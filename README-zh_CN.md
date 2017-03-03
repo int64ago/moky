@@ -100,6 +100,7 @@ module.exports = {
   - handlebars
   - nunjucks
   - ejs
+  - pug
 
 **但是**，因为使用了 [koa-views](https://github.com/queckezz/koa-views) ，并且 koa-views 使用了 [consolidate.js](https://github.com/tj/consolidate.js)，理论上 consolidate 支持的模板引擎都支持，如果使用中缺少，可以提 PR，会即时加上
 
@@ -149,7 +150,7 @@ handler(argv)
 
 ## 同步页面的代理
 
- > 如果你的应用是基于 MV* 框架的单页应用，这部分可以跳过
+> 如果你的应用是基于 MV* 框架的单页应用，这部分可以跳过
 
 如果我们的同步页面设置为 proxy 模式，一般是不会正常工作的
 

@@ -102,6 +102,7 @@ The `moky` has integrated some major template engines, if your template is one o
   - handlebars
   - nunjucks
   - ejs
+  - pug
 
 **BUT**, for we use [koa-views](https://github.com/queckezz/koa-views) and koa-views use [consolidate.js](https://github.com/tj/consolidate.js), it's quite easy to enable a template engine, if you use a template engine we don't include, issues welcome :-)
 

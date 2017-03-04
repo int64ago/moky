@@ -16,13 +16,14 @@ module.exports = (options) => {
         body = JSON.stringify({ 'moky says': 'Seems like a page, you should set urlMaps.' })
       } else if (u.isJSON(body)) {
         u.writeMockBack(ctx, options, JSON.parse(body))
+        options.verbose && u.log.yellow(`Async data: ${body}`)
       }
       ctx.body = body
     } else {
       const data = u.getAsyncMock(ctx.method, ctx.path, options)
       u.log.yellow(`Mock: ${ctx.path}`)
 
-      options.verbose && u.log.yellow(`Data: ${JSON.stringify(data)}`)
+      options.verbose && u.log.yellow(`Async data: ${JSON.stringify(data)}`)
       ctx.set('Content-Type', 'application/json')
       ctx.body = JSON.stringify(data)
     }

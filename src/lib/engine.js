@@ -1,11 +1,11 @@
 const consolidate = require('consolidate')
-const FastFTL = require('fast-ftl').default
+const { Render } = require('fast-ftl')
 
 module.exports = root => {
-  const fastFtl = new FastFTL({ root })
+  const ftl = Render({ root })
   return Object.assign(consolidate, {
     freemarker: (path, data) => {
-      return fastFtl.parse(path, data)
+      return ftl.parse(path, data)
     }
   })
 }

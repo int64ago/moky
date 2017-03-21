@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A proxy server with mock",
   "main": "src/index.js",
   "dependencies": {

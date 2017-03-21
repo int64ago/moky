@@ -1,6 +1,6 @@
 {
   "name": "moky",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A proxy server with mock",
   "main": "src/index.js",
   "dependencies": {
@@ -9,7 +9,7 @@
     "consolidate": "^0.14.5",
     "decache": "^4.1.0",
     "ejs": "^2.5.2",
-    "fast-ftl": "^1.6.2",
+    "fast-ftl": "^1.6.3",
     "fs-extra": "^1.0.0",
     "handlebars": "^4.0.5",
     "http-proxy": "^1.15.2",

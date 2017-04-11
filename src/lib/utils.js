@@ -8,7 +8,7 @@ const { copy, writeJSONSync, removeSync, existsSync } = require('fs-extra')
 
 exports.log = new Logger('moky')
 
-const readObj = (file, defaultMock = {}) => {
+const readObj = (file, ctx, defaultMock = {}) => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!existsSync(jsonName) && !existsSync(jsName)) {
@@ -17,7 +17,11 @@ const readObj = (file, defaultMock = {}) => {
   }
   try {
     decache(file)
-    return require(file)
+    const obj = require(file)
+    if (typeof obj === 'function') {
+      return obj(ctx)
+    }
+    return obj
   } catch (err) {
     this.log.red(err)
     return defaultMock
@@ -50,25 +54,25 @@ exports.parseConfig = (absPath) => {
   return config
 }
 
-exports.getViewsMock = (page, options) => {
+exports.getViewsMock = (page, ctx, options) => {
   const { viewsMockPath } = options
   if (!viewsMockPath) return {}
 
   const commonFile = path.join(viewsMockPath, '__COMMON__')
-  const commonMock = readObj(commonFile)
+  const commonMock = readObj(commonFile, ctx)
 
   const mockFile = path.join(viewsMockPath, page)
-  return Object.assign(commonMock, readObj(mockFile))
+  return Object.assign(commonMock, readObj(mockFile, ctx))
 }
 
-exports.getAsyncMock = (method, urlPath, options) => {
+exports.getAsyncMock = (method, ctx, urlPath, options) => {
   const { asyncMockPath, defaultMock = {} } = options
   if (!asyncMockPath) {
     this.log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
     return defaultMock
   }
   const mockFile = path.join(asyncMockPath, method.toLowerCase(), urlPath)
-  return readObj(mockFile, defaultMock)
+  return readObj(mockFile, ctx, defaultMock)
 }
 
 exports.hasProxyHeader = (proxyRes) => {

@@ -7,6 +7,7 @@ const mount = require('koa-mount')
 const engine = require('./lib/engine')
 const { error, render, async } = require('./middleware')
 const { log, printProxyMaps } = require('./lib/utils')
+const wpack = require('./lib/webpack')
 
 const faviconPath = path.join(__dirname, '../example/public/favicon.ico')
 
@@ -41,6 +42,9 @@ module.exports = (options = {}) => {
 
   // Others, pass to proxy or asyncMock
   app.use(async(options))
+
+  // webpack
+  wpack(app, options)
 
   const port = options.localPort || 3000
   app.listen(port)

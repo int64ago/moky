@@ -38,8 +38,7 @@ exports.mapUrlToPage = (url, urlMaps) => {
 }
 
 exports.parseConfig = (absPath) => {
-  if (!existsSync(absPath)) {
-    this.log.red(`File not found: ${absPath}`)
+  if (!exports.existsSync(absPath)) {
     return {}
   }
 
@@ -52,6 +51,14 @@ exports.parseConfig = (absPath) => {
     }
   }
   return config
+}
+
+exports.existsSync = (absPath) => {
+  if (!existsSync(absPath)) {
+    this.log.red(`File not found: ${absPath}`)
+    return false
+  }
+  return true
 }
 
 exports.getViewsMock = (page, ctx, options) => {

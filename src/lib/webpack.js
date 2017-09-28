@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const { existsSync } = require('./lib/utils')
+const { existsSync } = require('./utils')
 
 module.exports = (app, options) => {
     if (!options.webpackConfPath) { return }

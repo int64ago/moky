@@ -26,7 +26,7 @@
     "yargs": "^6.3.0"
   },
   "devDependencies": {
-    "webpack",
+    "webpack": "^2.3.3",
     "koa-webpack-hot-middleware": "^1.0.3",
     "koa-webpack-dev-middleware": "^2.0.1",
     "webpack-merge": "^4.1.0",

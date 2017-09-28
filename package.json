@@ -23,13 +23,13 @@
     "pug": "^2.0.0-beta11",
     "update-notifier": "^2.1.0",
     "url": "^0.11.0",
-    "yargs": "^6.3.0"
-  },
-  "devDependencies": {
+    "yargs": "^6.3.0",
     "webpack": "^2.3.3",
     "koa-webpack-hot-middleware": "^1.0.3",
     "koa-webpack-dev-middleware": "^2.0.1",
-    "webpack-merge": "^4.1.0",
+    "webpack-merge": "^4.1.0"
+  },
+  "devDependencies": {
     "standard": "^8.5.0"
   },
   "scripts": {

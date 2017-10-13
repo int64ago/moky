@@ -45,7 +45,7 @@ exports.parseConfig = (absPath) => {
   const config = require(absPath)
   // Required properties check
   for (let c of ['viewsPath', 'viewConfig', 'urlMaps']) {
-    if (!config[c]) {
+    if (!config.middlewares && !config[c]) {
       this.log.red(`<${c}> is required`)
       return {}
     }

@@ -1,0 +1,8 @@
+@import "./reset.less";
+@import "./f.less";
+@import "./table.less";
+@import "../../node_modules/nek-ui/dist/css/nek-ui.default.css";
+
+/* 交互规范中约定: 如果一屏幕内中的内容小于屏幕的高度, 则最后一个klcard应该占满剩余高度; */
+.m-pageview { display: flex; flex-direction: column; min-height: calc(~"100vh - 110px"); }
+.m-pageview .pageview_last { flex: 1 1 auto; }

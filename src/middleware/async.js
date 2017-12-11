@@ -7,8 +7,9 @@ module.exports = (options) => {
   return async ctx => {
 
     let target = ''
-    let isProxyLocalPort = true
+    let isProxyLocalPort = false
     if (options.proxyRules) {
+      isProxyLocalPort = true
       for (let item in options.proxyRules) {
         const reg = new RegExp(item, 'i')
         if (reg.test(ctx.path)) {

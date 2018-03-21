@@ -19,8 +19,11 @@ module.exports = (options = {}) => {
   // Handle koa error
   app.use(error)
 
-  // bodyparser
-  app.use(bodyParser());
+  // mock时使用bodyparser
+  if(!options.env) {
+    // bodyparser
+    app.use(bodyParser());
+  }
 
   // Server favicon
   const fav = options.faviconPath || faviconPath

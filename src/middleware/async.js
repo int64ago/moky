@@ -1,13 +1,45 @@
+const url = require('url')
 const Proxy = require('../lib/proxy')
 const u = require('../lib/utils')
 
 module.exports = (options) => {
   const proxy = Proxy(options, true)
-
   return async ctx => {
-    if (proxy) {
+
+    let target = ''
+    let isProxyLocalPort = false
+    if (options.proxyRules) {
+      isProxyLocalPort = true
+      for (let item in options.proxyRules) {
+        const reg = new RegExp(item, 'i')
+        if (reg.test(ctx.path)) {
+          target = options.proxyRules[item]
+          break
+        }
+      }
+
+      if (target) {
+        const hostWriteList = [
+          '127.0.0.1',
+          'localhost'
+        ]
+        const mokyPort = options.localPort || 3000
+        const targetUrl = url.parse(target)
+
+        if (hostWriteList.indexOf(targetUrl['hostname']) < 0) {
+          isProxyLocalPort = false
+        }
+        if (targetUrl['port'] != mokyPort) {
+          isProxyLocalPort = false
+        }
+      } else {
+        isProxyLocalPort = false
+      }
+    }
+    
+    if (proxy && !isProxyLocalPort) {
       u.log.yellow(`Proxy: ${ctx.path}`)
-      const proxyRes = await proxy(ctx.req)
+      const proxyRes = await proxy(ctx.req, target)
       ctx.status = proxyRes.statusCode
       ctx.set(proxyRes._headers)
 

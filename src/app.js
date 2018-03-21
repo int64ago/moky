@@ -4,6 +4,7 @@ const views = require('koa-views')
 const server = require('koa-static')
 const favicon = require('koa-favicon')
 const mount = require('koa-mount')
+const bodyParser = require('koa-bodyparser');
 const engine = require('./lib/engine')
 const { error, render, async } = require('./middleware')
 const { log, printProxyMaps } = require('./lib/utils')
@@ -17,6 +18,9 @@ module.exports = (options = {}) => {
 
   // Handle koa error
   app.use(error)
+
+  // bodyparser
+  app.use(bodyParser());
 
   // Server favicon
   const fav = options.faviconPath || faviconPath

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>考拉系统</title>
+     <!--请替换成自己的iconfont库-->
+    <link href="//at.alicdn.com/t/font_393438_5w8emy8a82blz0k9.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="page"></div>
+    <script>
+        (function(tagId) {
+            var script = document.createElement('script');
+            var span = document.createElement('span');
+            span.style.display = 'none';
+            span.id = 'feedback-collect-tool';
+            span.dataset.username = tagId;
+            var src = '//feedback.kaola.com/dist/feedback.js';
+            var today = new Date();
+            var version = '?t=' + today.getMonth()  + '-' + today.getDate();
+            script.src = src + version;
+            document.body.appendChild(span);
+            document.body.appendChild(script);
+        }('nickname'))
+    </script>
+</body>
+</html>

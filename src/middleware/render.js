@@ -20,7 +20,7 @@ module.exports = (options) => {
           return
         }
         if (u.hasProxyHeader(proxyRes)) {
-          data = JSON.parse(proxyRes.body)
+          data = JSON.parse(proxyRes.body || "{}")
         }
       } else {
         u.log.blue(`Render page: ${page}`)

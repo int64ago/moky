@@ -1,0 +1,38 @@
+/* 强制kl-table的title居中 */
+.m-kl-table {  
+    .tb_hd_th {
+         .th_content { 
+            justify-content: center!important;
+         }
+    }
+}  
+
+/* kl-table无法满足需求， 使用原生table替代时使用 */
+.m-table { 
+    table-layout: fixed; width: 100%; 
+
+    caption { color: #999; font-size: 12px; }
+    th, td { height: 32px; padding: 6px 8px; line-height: 16px; word-wrap: break-word; }
+    
+    thead { 
+        background: #eef1f4; font-size: 12px; color: #333; 
+        
+        th { text-align: center; border-right: 1px solid #d8dee4; border-bottom: 1px solid #e3e7eb; }
+        th:last-child { border-right: none; }
+    }
+
+    tbody { 
+        font-size: 12px; 
+
+        td { text-align: center;  border-bottom: 1px solid #ecf2f9; }
+    }
+
+    &-striped tbody {
+        tr:nth-of-type(2n+0) { background: #f6f9fc; }
+    }
+
+    &-hover tbody {
+        tr:hover { background: #ecf2f9; }
+    }
+}
+

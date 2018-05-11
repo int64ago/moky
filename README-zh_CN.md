@@ -77,6 +77,9 @@ module.exports = {
   // Host 头，在 proxy 模式下，如果目标机配置了虚拟主机这个会比较有用，可选
   hostName: 'randomuser.me',
 
+  /* Use custom middlewares instead of the origin service, OPTIONAL */
+  middlewares: path.resolve(__dirname, 'moky.middleware.js'),
+
   // 代理目标设置，可选
   // 格式可以是：<URL1>#<URL2> 这种形式
   // 这里的 <URL1> 表示页面代理目标，<URL2> 是异步接口代理目标

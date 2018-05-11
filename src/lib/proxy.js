@@ -37,7 +37,7 @@ module.exports = (options, isAsync = false) => {
     res.emit('proxyError', err)
   })
 
-  return req => {
+  return (req, target) => {
     const res = new ServerResponse(req)
     const bodyBuffers = []
     res.write = chunk => {
@@ -45,7 +45,13 @@ module.exports = (options, isAsync = false) => {
       return true
     }
     return new Promise((resolve, reject) => {
-      proxy.web(req, res)
+      if (target) {
+        const newOpts = Object.assign({}, proxyOpts, { target })
+        proxy.web(req, res, newOpts)
+      } else {
+        proxy.web(req, res, proxyOpts)
+      }
+      
       res.on('proxyEnd', () => {
         res.body = Buffer.concat(bodyBuffers).toString('utf8')
         resolve(res)

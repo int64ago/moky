@@ -52,7 +52,7 @@ module.exports = (options) => {
       }
       ctx.body = body
     } else {
-      const data = u.getAsyncMock(ctx.method, ctx, ctx.path, options)
+      const data = await u.getAsyncMock(ctx.method, ctx, ctx.path, options)
       u.log.yellow(`Mock: ${ctx.path}`)
 
       options.verbose && u.log.yellow(`Async data: ${JSON.stringify(data)}`)

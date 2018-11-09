@@ -24,7 +24,7 @@ module.exports = (options) => {
         }
       } else {
         u.log.blue(`Render page: ${page}`)
-        data = u.getViewsMock(page, ctx, options)
+        data = await u.getViewsMock(page, ctx, options)
       }
 
       options.verbose && u.log.blue(`Render data: ${JSON.stringify(data)}`)

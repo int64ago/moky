@@ -4,23 +4,54 @@ const Logger = require('chalklog')
 const path = require('path')
 const chalk = require('chalk')
 const url = require('url')
-const { copy, writeJSONSync, removeSync, existsSync } = require('fs-extra')
+const https = require('https')
+const { copy, writeJSONSync, removeSync, existsSync, writeJson } = require('fs-extra')
 
-exports.log = new Logger('moky')
+exports.log = new Logger('moky');
 
-const readObj = (file, ctx, defaultMock = {}) => {
+const getNeiData = async (ctx, neiKey='') => new Promise((resolve, reject) => {
+  if(!neiKey){
+    resolve(false);
+  }
+  const nei = 'https://nei.netease.com/api/apimock/';
+  const url = `${nei}${neiKey}${ctx.path}`;
+  https.get(url, (res) => {
+      res.on('data', (data) => {
+          try{
+            json = JSON.parse(data);
+            if (!json.code || json.code === 403) {
+              this.log.red(`${ctx.path} in NEI doesn't exists`);
+              resolve(false);
+            }
+            resolve(json);
+          }
+          catch(err){
+            resolve(false);
+          }
+      });
+  }).on('error', (e) => {
+      this.log.red(`read NEI error`);
+      resolve(false);
+  });
+});
+
+const readObj = async (file, ctx, defaultMock = {}, neiKey='') => {
   const jsonName = file + '.json'
   const jsName = file + '.js'
   if (!existsSync(jsonName) && !existsSync(jsName)) {
-    this.log.red(`${file}.js{on} doesn't exists`)
-    return defaultMock
+    this.log.red(`${file}.js{on} doesn't exists`);
+    const mockData = await getNeiData(ctx, neiKey) || defaultMock;
+    writeJson(file + '.json', mockData, err => {
+      if (err){
+        this.log.red(err);
+      }
+      this.log.yellow(`set mock data to ${ctx.path}.json`);
+    });
+    return mockData;
   }
   try {
     decache(file)
     const obj = require(file)
-    if (typeof obj === 'function') {
-      return obj(ctx)
-    }
     return obj
   } catch (err) {
     this.log.red(err)
@@ -54,25 +85,25 @@ exports.parseConfig = (absPath) => {
   return config
 }
 
-exports.getViewsMock = (page, ctx, options) => {
+exports.getViewsMock = async (page, ctx, options) => {
   const { viewsMockPath } = options
   if (!viewsMockPath) return {}
 
   const commonFile = path.join(viewsMockPath, '__COMMON__')
-  const commonMock = readObj(commonFile, ctx)
+  const commonMock = await readObj(commonFile, ctx)
 
   const mockFile = path.join(viewsMockPath, page)
-  return Object.assign(commonMock, readObj(mockFile, ctx))
+  return Object.assign(commonMock, await readObj(mockFile, ctx))
 }
 
-exports.getAsyncMock = (method, ctx, urlPath, options) => {
-  const { asyncMockPath, defaultMock = {} } = options
+exports.getAsyncMock = async (method, ctx, urlPath, options) => {
+  const { asyncMockPath, defaultMock = {}, neiKey = '' } = options
   if (!asyncMockPath) {
     this.log.red(`urlPath: ${urlPath}, mockPath: ${asyncMockPath}, not exists`)
     return defaultMock
   }
   const mockFile = path.join(asyncMockPath, method.toLowerCase(), urlPath)
-  return readObj(mockFile, ctx, defaultMock)
+  return await readObj(mockFile, ctx, defaultMock, neiKey)
 }
 
 exports.hasProxyHeader = (proxyRes) => {

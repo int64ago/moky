@@ -172,8 +172,8 @@ If your server is NodeJS, you can patch in middleware; if it's Java with Spring 
 [npm-url]: https://npmjs.org/package/moky
 [npm-image]: https://img.shields.io/npm/v/moky.svg
 
-[travis-url]: https://travis-ci.org/int64ago/moky
-[travis-image]: https://img.shields.io/travis/int64ago/moky.svg
+[travis-url]: https://travis-ci.com/int64ago/moky
+[travis-image]: https://img.shields.io/travis/com/int64ago/moky.svg
 
 [license-url]: https://github.com/int64ago/moky/blob/master/LICENSE
 [license-image]: https://img.shields.io/github/license/int64ago/moky.svg
